@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Se rencontrer · GD Réseau</title>
+<meta name="description" content="Parlez-nous de votre projet de communication : GD Réseau réunit les experts qui conviennent, à Paris ou à La Réunion.">
+<meta property="og:title" content="Se rencontrer · GD Réseau">
+<meta property="og:description" content="Parlez-nous de votre projet de communication : GD Réseau réunit les experts qui conviennent, à Paris ou à La Réunion.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="assets/img/marque/gdreseau-logo-couleur-1200.webp">
+<meta name="theme-color" content="#0e0c24">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preload" href="assets/fonts/unbounded.woff" as="font" type="font/woff" crossorigin>
+<link rel="preload" href="assets/fonts/manrope.woff" as="font" type="font/woff" crossorigin>
+<link rel="stylesheet" href="assets/css/main.css">
+<script>
+  (function () {
+    var d = document.documentElement, calm = false;
+    d.classList.add('js');
+    try { calm = localStorage.getItem('gd-anim') === 'calme'; } catch (e) {}
+    if (calm || matchMedia('(prefers-reduced-motion: reduce)').matches) d.classList.add('is-calm');
+    try { if (sessionStorage.getItem('gd-transition')) d.classList.add('is-arriving'); } catch (e) {}
+    setTimeout(function () { if (!d.classList.contains('is-ready')) { d.classList.remove('js', 'is-arriving', 'is-intro'); } }, 4000);
+  })();
+</script>
+</head>
+<body data-page="rencontrer">
+<a class="skip" href="#contenu">Aller au contenu</a>
+<div class="backdrop" aria-hidden="true">
+  <div class="backdrop-item is-on" data-backdrop="hero"><div class="ph" data-ph="rencontre-table-16x9" data-ph-m="rencontre-table-9x16"></div></div>
+</div>
+<canvas id="constellation" aria-hidden="true"></canvas>
+<div id="constellation-labels" class="c-labels" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+<div class="veil" aria-hidden="true"></div>
+<div class="cursor" aria-hidden="true"><svg class="cursor-tether"><line x1="0" y1="0" x2="0" y2="0"/></svg><span class="cursor-dot"></span></div>
+
+<header class="site-header">
+  <a class="brand" href="index.html" aria-label="GD Réseau, accueil"><img src="assets/img/marque/gdreseau-logo-negatif-600.webp" width="600" height="217" alt="GD Réseau, réseau de communication avancé"></a>
+  <nav class="nav" aria-label="Navigation principale">
+    <a href="index.html#services">Services</a>
+    <a href="index.html#realisations">Réalisations</a>
+    <a href="index.html#reseau">Le réseau</a>
+    <a href="index.html#rives">Nous trouver</a>
+  </nav>
+  <a class="btn btn--small" data-magnetic href="rencontrer.html"><span class="dot" aria-hidden="true"></span>Se rencontrer</a>
+  <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="menu">Menu</button>
+</header>
+<div class="menu" id="menu" hidden>
+  <nav aria-label="Menu">
+    <a href="index.html#services">Services</a>
+    <a href="index.html#realisations">Réalisations</a>
+    <a href="wope.html">Wopé</a>
+    <a href="index.html#reseau">Le réseau</a>
+    <a href="index.html#rives">Nous trouver</a>
+    <a href="rencontrer.html">Se rencontrer</a>
+  </nav>
+  <div class="menu-foot">
+    <a href="tel:+33674916133">06 74 91 61 33</a>
+    <a href="mailto:gdreseau@gmail.com">gdreseau@gmail.com</a>
+  </div>
+</div>
+
+<main id="contenu">
+
+  <section class="page-hero" data-scene="sky-quiet" data-backdrop-key="hero" style="min-height:72vh;min-height:72svh">
+    <div class="wrap">
+      <p class="eyeline" data-hero>Se rencontrer</p>
+      <h1 class="page-title is-medium">Parlons de votre projet</h1>
+      <p class="page-sub" data-hero>En cinq questions, dites-nous ce dont vous avez besoin : nous réunissons les experts du réseau qui conviennent et nous fixons un rendez-vous.</p>
+    </div>
+  </section>
+
+  <section class="sec" data-scene="team" id="brief-sec" style="padding-top:clamp(48px,6vw,80px)">
+    <div class="wrap brief-grid">
+      <form id="brief" class="brief" novalidate>
+        <div class="progress"><div class="progress-bar"><span></span></div><span class="progress-txt">Étape 1 sur 5</span></div>
+        <fieldset class="step">
+          <legend>Vous êtes</legend>
+          <p class="hint">Pour adapter notre réponse à votre structure.</p>
+          <div class="choices"><label class="choice"><input type="radio" name="profil" value="TPE"><span class="c-box"><span class="c-txt">TPE</span></span></label><label class="choice"><input type="radio" name="profil" value="PME"><span class="c-box"><span class="c-txt">PME</span></span></label><label class="choice"><input type="radio" name="profil" value="Collectivité"><span class="c-box"><span class="c-txt">Collectivité</span></span></label><label class="choice"><input type="radio" name="profil" value="Autre structure"><span class="c-box"><span class="c-txt">Autre structure</span></span></label></div>
+          <p class="err" role="alert"></p>
+        </fieldset>
+        <fieldset class="step" hidden>
+          <legend>De quoi avez-vous besoin ?</legend>
+          <p class="hint">Plusieurs choix possibles. Votre équipe projet se compose au fur et à mesure.</p>
+          <div class="choices"><label class="choice"><input type="checkbox" name="besoin" value="btoc"><span class="c-box"><span class="c-txt">Stratégie BtoC<small>Publicité, promotion</small></span></span></label><label class="choice"><input type="checkbox" name="besoin" value="btob"><span class="c-box"><span class="c-txt">Communication interne<small>BtoB</small></span></span></label><label class="choice"><input type="checkbox" name="besoin" value="print"><span class="c-box"><span class="c-txt">Création print<small>Édition, affiches, dépliants</small></span></span></label><label class="choice"><input type="checkbox" name="besoin" value="digital"><span class="c-box"><span class="c-txt">Digital et web<small>Digitalisation web</small></span></span></label><label class="choice"><input type="checkbox" name="besoin" value="audiovisuel"><span class="c-box"><span class="c-txt">Audiovisuel<small>Films, spots radio</small></span></span></label><label class="choice"><input type="checkbox" name="besoin" value="evenementiel"><span class="c-box"><span class="c-txt">Événementiel</span></span></label><label class="choice"><input type="checkbox" name="besoin" value="rp"><span class="c-box"><span class="c-txt">Relations publiques</span></span></label><label class="choice"><input type="checkbox" name="besoin" value="social"><span class="c-box"><span class="c-txt">Réseaux sociaux</span></span></label></div>
+          <p class="err" role="alert"></p>
+        </fieldset>
+        <fieldset class="step" hidden>
+          <legend>Pour quand ?</legend>
+          <p class="hint">Une échéance approximative suffit.</p>
+          <div class="choices"><label class="choice"><input type="radio" name="echeance" value="Moins d’un mois"><span class="c-box"><span class="c-txt">Moins d’un mois</span></span></label><label class="choice"><input type="radio" name="echeance" value="Un à trois mois"><span class="c-box"><span class="c-txt">Un à trois mois</span></span></label><label class="choice"><input type="radio" name="echeance" value="Plus de trois mois"><span class="c-box"><span class="c-txt">Plus de trois mois</span></span></label><label class="choice"><input type="radio" name="echeance" value="À définir ensemble"><span class="c-box"><span class="c-txt">À définir ensemble</span></span></label></div>
+          <p class="err" role="alert"></p>
+        </fieldset>
+        <fieldset class="step" hidden>
+          <legend>Où se rencontrer ?</legend>
+          <div class="lieu"><label class="choice"><input type="radio" name="lieu" value="À La Réunion"><span class="c-box"><span class="c-txt">À La Réunion</span></span></label><label class="choice"><input type="radio" name="lieu" value="À Paris"><span class="c-box"><span class="c-txt">À Paris</span></span></label><label class="choice"><input type="radio" name="lieu" value="En visioconférence"><span class="c-box"><span class="c-txt">En visioconférence</span></span></label></div>
+          <p class="hint">Proposez un créneau si vous le souhaitez. Les horaires s’affichent à l’heure de La Réunion et de Paris. Démonstration : aucun rendez-vous n’est réservé.</p>
+          <div class="slots"></div>
+          <p class="err" role="alert"></p>
+        </fieldset>
+        <fieldset class="step" hidden>
+          <legend>Vos coordonnées</legend>
+          <p class="hint">Pour que nous puissions vous répondre.</p>
+          <div class="field-row">
+            <div class="field"><label for="f-nom">Nom</label><input id="f-nom" name="nom" autocomplete="name" required></div>
+            <div class="field"><label for="f-org">Entreprise ou collectivité</label><input id="f-org" name="organisation" autocomplete="organization"></div>
+          </div>
+          <div class="field-row">
+            <div class="field"><label for="f-mail">E-mail</label><input id="f-mail" name="email" type="email" autocomplete="email" required></div>
+            <div class="field"><label for="f-tel">Téléphone (facultatif)</label><input id="f-tel" name="tel" type="tel" autocomplete="tel"></div>
+          </div>
+          <div class="field"><label for="f-msg">Votre projet en quelques mots (facultatif)</label><textarea id="f-msg" name="message"></textarea></div>
+          <label class="consent"><input type="checkbox" id="f-rgpd"><span>J’accepte que GD Réseau utilise ces informations pour me recontacter au sujet de mon projet. Voir les <a href="mentions-legales.html#donnees">mentions légales</a>.</span></label>
+          <p class="err" role="alert"></p>
+        </fieldset>
+        <div class="brief-nav">
+          <button type="button" class="btn btn--ghost" data-prev hidden>Retour</button>
+          <button type="submit" class="btn btn--primary" data-next>Continuer</button>
+        </div>
+        <div class="done">
+          <h2 class="sec-title" tabindex="-1">Merci, votre demande est prête</h2>
+          <p class="note">Démonstration : aucune donnée n’est envoyée depuis cette maquette.</p>
+          <dl class="recap"></dl>
+          <div class="hero-actions">
+            <button type="button" class="btn btn--ghost" data-edit>Modifier ma demande</button>
+            <a class="link-draw" href="index.html">Retour à l’accueil</a>
+          </div>
+        </div>
+      </form>
+      <aside class="brief-side" aria-label="Votre équipe projet">
+        <div class="brief-stage" aria-hidden="true"><div class="team-anchor" data-anchor="team"></div></div>
+        <div class="brief-team" aria-live="polite">
+          <h2>Votre équipe projet</h2>
+          <ul></ul>
+          <p class="note" style="margin-top:12px">Composition illustrative, ajustée lors du rendez-vous.</p>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="sec" data-scene="dim" id="contact">
+    <div class="wrap contact-grid">
+      <div>
+        <h2 class="sec-title" data-split>Ou directement</h2>
+        <dl class="contact-list">
+          <div><dt>Téléphone</dt><dd><a href="tel:+33674916133">06 74 91 61 33</a></dd></div>
+          <div><dt>E-mail</dt><dd><a href="mailto:gdreseau@gmail.com">gdreseau@gmail.com</a></dd></div>
+          <div><dt>Siège</dt><dd>ZAC du Triangle, 8 rue de l’Amitié<br>97490 Sainte-Clotilde, La Réunion</dd></div>
+          <div><dt>Horaires</dt><dd>9h – 17h, heure de La Réunion</dd><dd class="open" data-open style="font-size:.9rem"></dd></div>
+          <div><dt>Heure locale</dt><dd>Paris <time data-clock="Europe/Paris">--:--</time>, La Réunion <time data-clock="Indian/Reunion">--:--</time></dd></div>
+        </dl>
+      </div>
+      <div class="media contact-photo" data-wipe><div class="ph" data-ph="rives-reunion-2x3"></div></div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div>
+      <img class="f-logo" src="assets/img/marque/gdreseau-logo-negatif-600.webp" width="600" height="217" alt="GD Réseau" loading="lazy">
+      <p class="muted" style="color:var(--brume);max-width:22em">Agence conseil en communication BtoB et BtoC, en réseau d’experts.</p>
+    </div>
+    <div>
+      <h2>Siège</h2>
+      <address>GD Réseau (SAS)<br>ZAC du Triangle<br>8 rue de l’Amitié<br>97490 Sainte-Clotilde, La Réunion</address>
+    </div>
+    <div>
+      <h2>Contact</h2>
+      <ul>
+        <li><a href="tel:+33674916133">06 74 91 61 33</a></li>
+        <li><a href="mailto:gdreseau@gmail.com">gdreseau@gmail.com</a></li>
+        <li>Horaires : 9h – 17h</li>
+        <li><span class="open" data-open></span></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Suivre et consulter</h2>
+      <ul>
+        <li><a href="https://fr.linkedin.com/in/gilles-decomps-83a52233" target="_blank" rel="noopener">LinkedIn de Gilles Decomps</a></li>
+        <li><a href="https://www.facebook.com/GDReseau/" target="_blank" rel="noopener">Facebook</a></li>
+        <li><a href="mentions-legales.html">Mentions légales</a></li>
+        <li><button class="calm-toggle" type="button" aria-pressed="false">Réduire les animations</button></li>
+      </ul>
+    </div>
+  </div>
+  <svg class="f-word" viewBox="0 0 1400 220" aria-hidden="true"><text x="4" y="186">GD Réseau</text></svg>
+  <div class="wrap f-legal"><span>© 2026 GD Réseau</span><span>Maquette de démonstration, contenus à valider</span></div>
+</footer>
+
+<script defer src="assets/js/vendor/gsap.min.js"></script>
+<script defer src="assets/js/vendor/ScrollTrigger.min.js"></script>
+<script defer src="assets/js/vendor/SplitText.min.js"></script>
+<script defer src="assets/js/vendor/DrawSVGPlugin.min.js"></script>
+<script defer src="assets/js/vendor/lenis.min.js"></script>
+<script type="module" src="assets/js/site.js"></script>
+</body>
+</html>

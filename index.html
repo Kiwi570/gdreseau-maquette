@@ -1,0 +1,462 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GD Réseau · Création et communication, Paris et La Réunion</title>
+<meta name="description" content="GD Réseau, agence conseil en communication BtoB et BtoC organisée en réseau d’experts, sans charges ni frais de structure. Paris et La Réunion.">
+<meta property="og:title" content="GD Réseau · Un réseau d’experts en création et communication">
+<meta property="og:description" content="Agence conseil en communication BtoB et BtoC, en réseau d’experts. Paris et La Réunion.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="assets/img/marque/gdreseau-logo-couleur-1200.webp">
+<meta name="theme-color" content="#0e0c24">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preload" href="assets/fonts/unbounded.woff" as="font" type="font/woff" crossorigin>
+<link rel="preload" href="assets/fonts/manrope.woff" as="font" type="font/woff" crossorigin>
+<link rel="stylesheet" href="assets/css/main.css">
+<script>
+  (function () {
+    var d = document.documentElement, calm = false;
+    d.classList.add('js');
+    try { calm = localStorage.getItem('gd-anim') === 'calme'; } catch (e) {}
+    if (calm || matchMedia('(prefers-reduced-motion: reduce)').matches) d.classList.add('is-calm');
+    try { if (sessionStorage.getItem('gd-transition')) d.classList.add('is-arriving'); } catch (e) {}
+    setTimeout(function () { if (!d.classList.contains('is-ready')) { d.classList.remove('js', 'is-arriving', 'is-intro'); } }, 4000);
+  })();
+</script>
+</head>
+<body data-page="accueil">
+<a class="skip" href="#contenu">Aller au contenu</a>
+
+<div class="backdrop" aria-hidden="true">
+  <div class="backdrop-item is-on" data-backdrop="hero"><div class="ph" data-ph="accueil-hero-16x9" data-ph-m="accueil-hero-9x16" data-ph-kind="ciel"></div></div>
+  <div class="backdrop-item" data-backdrop="temoignages"><div class="ph" data-ph="temoignages-fond-16x9"></div></div>
+  <div class="backdrop-item" data-backdrop="rencontre"><div class="ph" data-ph="rencontre-table-16x9" data-ph-m="rencontre-table-9x16"></div></div>
+</div>
+<canvas id="constellation" aria-hidden="true"></canvas>
+<div id="constellation-labels" class="c-labels" aria-hidden="true"></div>
+<p class="intro-word" aria-hidden="true">Réseau de communication avancé</p>
+<div class="grain" aria-hidden="true"></div>
+<div class="veil" aria-hidden="true"></div>
+<div class="cursor" aria-hidden="true"><svg class="cursor-tether"><line x1="0" y1="0" x2="0" y2="0"/></svg><span class="cursor-dot"></span></div>
+
+<header class="site-header">
+  <a class="brand" href="index.html" aria-label="GD Réseau, accueil"><img src="assets/img/marque/gdreseau-logo-negatif-600.webp" width="600" height="217" alt="GD Réseau, réseau de communication avancé"></a>
+  <nav class="nav" aria-label="Navigation principale">
+    <a href="index.html#services">Services</a>
+    <a href="index.html#realisations">Réalisations</a>
+    <a href="index.html#reseau">Le réseau</a>
+    <a href="index.html#rives">Nous trouver</a>
+  </nav>
+  <a class="btn btn--small" data-magnetic href="rencontrer.html"><span class="dot" aria-hidden="true"></span>Se rencontrer</a>
+  <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="menu">Menu</button>
+</header>
+<div class="menu" id="menu" hidden>
+  <nav aria-label="Menu">
+    <a href="index.html#services">Services</a>
+    <a href="index.html#realisations">Réalisations</a>
+    <a href="wope.html">Wopé</a>
+    <a href="index.html#reseau">Le réseau</a>
+    <a href="index.html#rives">Nous trouver</a>
+    <a href="rencontrer.html">Se rencontrer</a>
+  </nav>
+  <div class="menu-foot">
+    <a href="tel:+33674916133">06 74 91 61 33</a>
+    <a href="mailto:gdreseau@gmail.com">gdreseau@gmail.com</a>
+  </div>
+</div>
+
+<main id="contenu">
+
+  <!-- Ouverture -->
+  <section class="hero" id="intro" data-scene="sky" data-backdrop-key="hero">
+    <div class="hero-inner wrap">
+      <p class="hero-kicker" data-hero>Un réseau d’experts en</p>
+      <h1 class="hero-title"><span class="t1">Création</span><span class="t2">&amp; communication</span></h1>
+      <div class="hero-bottom">
+        <div>
+          <p class="hero-lede" data-hero>Nous plaçons l’humain et l’authenticité au cœur de la marque.</p>
+          <div class="hero-actions" data-hero>
+            <a class="btn btn--primary" data-magnetic href="rencontrer.html">Se rencontrer</a>
+            <a class="link-draw" href="#realisations">Voir les réalisations</a>
+          </div>
+        </div>
+        <div class="hero-side" data-hero>
+          <a class="hero-prix" href="wope.html"><span class="leader mini-leader" aria-hidden="true"><span class="leader-num">3</span></span><span>3<sup>e</sup> prix Films 2021, Creatives</span></a>
+          <p class="clocks"><span>Paris<time data-clock="Europe/Paris">--:--</time></span><span>La Réunion<time data-clock="Indian/Reunion">--:--</time></span></p>
+        </div>
+      </div>
+    </div>
+    <span class="scroll-cue" aria-hidden="true"></span>
+  </section>
+
+  <!-- Preuves -->
+  <section class="preuves" id="preuves" data-scene="dim">
+    <div class="wrap preuves-grid">
+      <div class="prix">
+        <div class="leader" data-leader aria-hidden="true"><span class="leader-num"><span class="leader-n">8</span><span class="prix-sup">e</span></span></div>
+        <div class="prix-text">
+          <img class="prix-logo" src="assets/img/prix/creatives-logo-309.webp" width="309" height="163" alt="Creatives, concours des meilleures créations publicitaires" loading="lazy">
+          <strong>3<sup>e</sup> prix, catégorie Films, 2021</strong>
+          <p>« Wopé » pour Sémittel, en collaboration avec Yello.</p>
+          <a class="link-draw" href="wope.html">Découvrir le projet</a>
+        </div>
+      </div>
+      <div>
+        <p class="clients-label">Ils nous ont confié leur communication</p>
+        <div class="marquee">
+          <div class="marquee-track">
+            <span class="plaque"><img src="assets/img/clients/crc-logo-600.webp" width="600" height="341" alt="Groupe CRC, Caisses Réunionnaises Complémentaires" loading="lazy"></span>
+            <span class="plaque"><img src="assets/img/clients/altervelo-logo-600.webp" width="600" height="201" alt="Altervélo libre-service" loading="lazy"></span>
+            <span class="plaque"><img src="assets/img/clients/corsair-logo-438.webp" width="438" height="112" alt="Corsair" loading="lazy"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Nous sommes -->
+  <section class="manifeste" id="manifeste" data-scene="dim">
+    <div class="manifeste-sticky">
+      <div class="wrap manifeste-grid">
+        <div class="manifeste-text">
+          <h2 class="sec-title" data-split>Un réseau, pas une structure</h2>
+          <p class="lead" data-reveal>Bienvenue chez GD Réseau, réseau de communication avancé. Nous proposons un modèle dédié à la transformation des entreprises pour une économie en mutation.</p>
+          <p data-reveal>Agence conseil en communication BtoB et BtoC, GD Réseau est implantée en réseau interdisciplinaire, sans charges ni frais de structure.</p>
+          <p data-reveal>Expérimentés, souples, disponibles et réactifs sans contraintes, nos experts des métiers de la communication sont reliés par l’envie.</p>
+        </div>
+        <div class="manifeste-visual">
+          <svg class="org" viewBox="0 0 600 440" role="img" aria-labelledby="org-t">
+            <title id="org-t">Un organigramme pyramidal se défait et devient un réseau horizontal d’experts.</title>
+            <g class="o-lines"></g>
+            <g class="n-lines"></g>
+            <g class="o-nodes"></g>
+            <text class="o-cap o-cap-a" x="0" y="430">Une agence classique : une hiérarchie, des frais de structure.</text>
+            <text class="o-cap o-cap-b" x="0" y="430" opacity="0">GD Réseau : des experts reliés, mobilisés selon le projet.</text>
+          </svg>
+          <div class="manifeste-photo media" data-parallax="-12"><div class="ph" data-ph="manifeste-atelier-2x3"></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section class="sec services" id="services" data-scene="team">
+    <div class="wrap services-grid">
+      <div>
+        <h2 class="sec-title" data-split>Nos services</h2>
+        <p class="sec-lede" data-reveal>Chaque projet réunit les métiers dont il a besoin. Choisissez un service pour voir l’équipe qui se forme.</p>
+        <ul class="svc-list">
+          <li class="svc is-active is-open" data-team="0,3,6,5,4,7">
+            <button class="svc-btn" type="button" aria-expanded="true"><span class="svc-name">Création et design</span></button>
+            <div class="svc-body">
+              <div class="svc-card"><div class="media" data-tilt><div class="ph" data-ph="service-creation-2x3"></div></div></div>
+              <p class="svc-team"><strong>Équipe type :</strong> directeurs artistiques, designers graphiques, infographistes multimédia, web designers, photographes, avec un chef de projet.</p>
+            </div>
+          </li>
+          <li class="svc" data-team="0,1,2,8,7">
+            <button class="svc-btn" type="button" aria-expanded="false"><span class="svc-name">Contenu marketing</span></button>
+            <div class="svc-body">
+              <div class="svc-card"><div class="media" data-tilt><div class="ph" data-ph="service-contenu-2x3"></div></div></div>
+              <p class="svc-team"><strong>Équipe type :</strong> concepteurs, rédacteurs, réalisateurs, photographes, avec un chef de projet.</p>
+            </div>
+          </li>
+          <li class="svc" data-team="0,2,1,7">
+            <button class="svc-btn" type="button" aria-expanded="false"><span class="svc-name">Relations publiques</span></button>
+            <div class="svc-body">
+              <div class="svc-card"><div class="media" data-tilt><div class="ph" data-ph="service-rp-2x3"></div></div></div>
+              <p class="svc-team"><strong>Équipe type :</strong> rédacteurs, concepteurs, photographes, avec un chef de projet.</p>
+            </div>
+          </li>
+          <li class="svc" data-team="0,1,2,5,8">
+            <button class="svc-btn" type="button" aria-expanded="false"><span class="svc-name">Réseaux sociaux</span></button>
+            <div class="svc-body">
+              <div class="svc-card"><div class="media" data-tilt><div class="ph" data-ph="service-reseaux-2x3"></div></div></div>
+              <p class="svc-team"><strong>Équipe type :</strong> concepteurs, rédacteurs, infographistes multimédia, réalisateurs, avec un chef de projet.</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="team-stage" aria-hidden="true">
+        <div class="team-anchor" data-anchor="team"></div>
+        <p class="team-note">Composition illustrative, ajustée à chaque projet</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Nous faisons -->
+  <section class="sec faisons" id="faisons" data-scene="dim">
+    <div class="wrap">
+      <h2 class="sec-title" data-split>Nous faisons</h2>
+      <div class="faisons-grid">
+        <article class="strat">
+          <h3 class="h3 block-title">Stratégie</h3>
+          <div class="seg" role="group" aria-label="Type de communication" data-v="btoc">
+            <button type="button" aria-pressed="true" data-k="btoc">BtoC</button>
+            <button type="button" aria-pressed="false" data-k="btob">BtoB</button>
+            <span class="seg-pill" aria-hidden="true"></span>
+          </div>
+          <div class="strat-out" aria-live="polite">
+            <div data-k="btoc"><span class="big">Publicité, promotion</span><span class="small">Faire connaître et faire choisir votre marque.</span></div>
+            <div data-k="btob" hidden><span class="big">Communication interne</span><span class="small">Informer, fédérer et embarquer vos équipes.</span></div>
+          </div>
+        </article>
+        <article class="outils">
+          <h3 class="h3 block-title">Les outils</h3>
+          <div class="outils-in">
+            <div class="radar" aria-hidden="true">
+              <svg viewBox="-160 -160 320 320">
+                <defs>
+                  <linearGradient id="sweepGrad" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0" stop-color="#1db5d5" stop-opacity="0"/>
+                    <stop offset="1" stop-color="#1db5d5" stop-opacity=".45"/>
+                  </linearGradient>
+                </defs>
+                <circle class="r-ring" r="150"/><circle class="r-ring" r="100"/><circle class="r-ring" r="50"/>
+                <path class="r-sweep" d="M0 0 L150 0 A150 150 0 0 0 129.9 -75 Z"/>
+                <g class="r-nodes"></g>
+                <circle class="r-core" r="7"/>
+              </svg>
+            </div>
+            <ul class="outils-list">
+              <li>Études et stratégies</li>
+              <li>Prises de vues, reportages</li>
+              <li>Rédaction, interviews</li>
+              <li>Recherches iconographiques, illustrations</li>
+              <li>Création, adaptation graphique</li>
+              <li>Mise en page, exécution</li>
+              <li>Digitalisation web</li>
+              <li>Films, tournages, montages vidéo</li>
+              <li>Conception et réalisation de spots radio</li>
+              <li>Impression</li>
+            </ul>
+          </div>
+        </article>
+        <article class="creation">
+          <h3 class="h3 block-title">Création</h3>
+          <ul class="tiles">
+            <li class="tile"><div class="media" data-wipe><div class="ph" data-ph="media-print-1x1"></div></div><p class="tile-cap"><span class="h3">Print</span></p></li>
+            <li class="tile"><div class="media" data-wipe><div class="ph" data-ph="media-digital-1x1"></div></div><p class="tile-cap"><span class="h3">Digital</span></p></li>
+            <li class="tile"><div class="media" data-wipe><div class="ph" data-ph="media-audiovisuel-1x1"></div></div><p class="tile-cap"><span class="h3">Audiovisuel</span></p></li>
+            <li class="tile"><div class="media" data-wipe><div class="ph" data-ph="media-evenementiel-1x1"></div></div><p class="tile-cap"><span class="h3">Événementiel</span></p></li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Nous pensons -->
+  <section class="sec pensons is-light" id="pensons" data-scene="hide">
+    <div class="wrap pensons-grid">
+      <div>
+        <h2 class="sec-title" data-split>Nous pensons</h2>
+        <p class="stat" aria-label="80 %"><span class="stat-num" data-count="80">80</span><span class="stat-unit">%</span></p>
+        <p class="stat-label">des économies contemporaines sont désormais immatérielles.</p>
+        <p class="note">Chiffre cité par GD Réseau, source à préciser.</p>
+        <p class="pensons-body">La transformation de notre société impose un nouveau modèle de communication des entreprises. GD Réseau offre un dispositif qui renoue avec un territoire indissociable de l’activité de l’entreprise : l’expertise et l’opérationnel du réseau.</p>
+        <div class="enjeux">
+          <svg aria-hidden="true"><path d=""/></svg>
+          <ul aria-label="Les nouveaux enjeux">
+            <li>Innovation</li><li>Mobilité</li><li>Singularité</li><li>Contenus</li>
+          </ul>
+        </div>
+        <div class="ring360">
+          <svg viewBox="0 0 120 120" aria-hidden="true">
+            <circle class="rg-bg" cx="60" cy="60" r="52"/>
+            <circle class="rg-fg" cx="60" cy="60" r="52" transform="rotate(-90 60 60)"/>
+            <text x="60" y="62"><tspan class="rg-num">360</tspan>°</text>
+          </svg>
+          <p>Pour les TPE, les PME et les collectivités : un pilotage opérationnel à 360°, à prix optimisés.</p>
+        </div>
+      </div>
+      <div class="pensons-cols" aria-hidden="true">
+        <div class="media" data-parallax="-8"><div class="ph" data-ph="pensons-innovation-9x16"></div></div>
+        <div class="media" data-parallax="-22"><div class="ph" data-ph="pensons-mobilite-9x16"></div></div>
+        <div class="media" data-parallax="-14"><div class="ph" data-ph="pensons-contenus-9x16"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Réalisations -->
+  <section class="real" id="realisations" data-scene="dim">
+    <div class="real-pin">
+      <header class="wrap real-head">
+        <h2 class="sec-title" data-split>Nos réalisations</h2>
+        <p data-reveal>Les créations publicitaires et institutionnelles sont faites en respectant l’univers de la marque. Nous nous adaptons à votre projet.</p>
+      </header>
+      <div class="timeline">
+        <div class="tl-ruler" aria-hidden="true"><span class="tl-tc">00:00:00:00</span><span class="tl-ticks"></span></div>
+        <span class="tl-head" aria-hidden="true"></span>
+        <div class="tl-viewport">
+          <div class="tl-track">
+            <article class="clip">
+              <div class="media"><img src="assets/img/realisations/crc-campagne-portraits-1052.webp" srcset="assets/img/realisations/crc-campagne-portraits-640.webp 640w, assets/img/realisations/crc-campagne-portraits-1052.webp 1052w" sizes="(max-width: 900px) 82vw, 38vw" width="1052" height="636" alt="Visuel du Groupe CRC : mosaïque de portraits sur fonds colorés, avec la signature Santé, retraite, prévoyance, action sociale." loading="lazy" style="object-position:50% 40%"></div>
+              <div class="clip-bar"></div>
+              <h3 class="h3">Groupe CRC</h3>
+              <p>Visuel de marque : une mosaïque de portraits pour les Caisses Réunionnaises Complémentaires.</p>
+            </article>
+            <article class="clip">
+              <div class="media"><img src="assets/img/realisations/corsair-depliant-fidelite-1200.webp" srcset="assets/img/realisations/corsair-depliant-fidelite-640.webp 640w, assets/img/realisations/corsair-depliant-fidelite-1200.webp 1200w, assets/img/realisations/corsair-depliant-fidelite-1800.webp 1800w" sizes="(max-width: 900px) 82vw, 38vw" width="1200" height="987" alt="Dépliant Corsair présentant les cartes Le Club, Gold et Platinum, avec la signature Votre fidélité, tout un programme." loading="lazy"></div>
+              <div class="clip-bar"></div>
+              <h3 class="h3">Corsair</h3>
+              <p>Dépliant du programme de fidélité : « Votre fidélité, tout un programme ».</p>
+            </article>
+            <article class="clip">
+              <div class="media"><img src="assets/img/realisations/altervelo-affiche-mode-velo-1200.webp" srcset="assets/img/realisations/altervelo-affiche-mode-velo-640.webp 640w, assets/img/realisations/altervelo-affiche-mode-velo-1200.webp 1200w, assets/img/realisations/altervelo-affiche-mode-velo-1920.webp 1920w" sizes="(max-width: 900px) 82vw, 38vw" width="1200" height="900" alt="Affiche Altervélo : Passez en mode vélo ! Location longue durée de vélos et trottinettes." loading="lazy"></div>
+              <div class="clip-bar"></div>
+              <h3 class="h3">Altervélo</h3>
+              <p>Affiche « Passez en mode vélo ! » pour la location longue durée de vélos et trottinettes.</p>
+            </article>
+            <article class="clip clip--film">
+              <a href="wope.html">
+                <div class="media"><div class="ph" data-ph="wope-film" data-ph-kind="film"></div></div>
+                <div class="clip-bar"></div>
+                <span class="clip-tag">3<sup>e</sup> prix Films 2021</span>
+                <h3 class="h3">Wopé, pour Sémittel</h3>
+                <p>Un film réalisé en collaboration avec Yello. Voir l’étude de cas.</p>
+              </a>
+            </article>
+            <article class="clip clip--next">
+              <a href="rencontrer.html">
+                <div class="media"><span>Votre projet, au prochain plan&nbsp;?</span></div>
+                <div class="clip-bar"></div>
+                <h3 class="h3">Se rencontrer</h3>
+                <p>Parlons de votre prochaine campagne.</p>
+              </a>
+            </article>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Le réseau -->
+  <section class="sec reseau" id="reseau" data-scene="dim">
+    <div class="wrap">
+      <div class="reseau-head">
+        <h2 class="sec-title" data-split>Pour vous, notre équipe</h2>
+        <p class="sec-lede" data-reveal>Innovants, souples, disponibles, réactifs, mais surtout passionnés et sans contrainte : nos experts des métiers de la communication sont reliés par l’envie.</p>
+      </div>
+      <div class="metiers-net">
+        <svg aria-hidden="true"></svg>
+        <ul class="metiers" aria-label="Les métiers du réseau">
+          <li tabindex="0">Chefs de projet</li>
+          <li tabindex="0">Concepteurs</li>
+          <li tabindex="0">Rédacteurs</li>
+          <li tabindex="0">Directeurs artistiques</li>
+          <li tabindex="0">Web designers</li>
+          <li tabindex="0">Infographistes multimédia</li>
+          <li tabindex="0">Designers graphiques</li>
+          <li tabindex="0">Photographes</li>
+          <li tabindex="0">Réalisateurs</li>
+        </ul>
+      </div>
+      <ul class="portraits">
+        <li><figure class="portrait"><div class="media" data-wipe><img src="assets/img/equipe/portrait-homme-maquette-avion-480.webp" width="480" height="480" alt="Portrait en noir et blanc d’un membre de l’équipe tenant une maquette d’avion." loading="lazy"></div><figcaption><span class="p-name todo">Prénom à compléter</span><span class="p-role">Rôle à compléter</span></figcaption></figure></li>
+        <li><figure class="portrait"><div class="media" data-wipe><img src="assets/img/equipe/damien-430.webp" width="430" height="400" alt="Portrait en noir et blanc de Damien." loading="lazy"></div><figcaption><span class="p-name">Damien</span><span class="p-role">Rôle à compléter</span></figcaption></figure></li>
+        <li><figure class="portrait"><div class="media" data-wipe><img src="assets/img/equipe/portrait-femme-lunettes-480.webp" width="480" height="480" alt="Portrait en noir et blanc d’une membre de l’équipe." loading="lazy"></div><figcaption><span class="p-name todo">Prénom à compléter</span><span class="p-role">Rôle à compléter</span></figcaption></figure></li>
+        <li><figure class="portrait"><div class="media" data-wipe><img src="assets/img/equipe/portrait-femme-brune-427.webp" width="427" height="640" alt="Portrait en noir et blanc d’une membre de l’équipe." loading="lazy" style="object-position:50% 25%"></div><figcaption><span class="p-name todo">Prénom à compléter</span><span class="p-role">Rôle à compléter</span></figcaption></figure></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Deux rives -->
+  <section class="sec rives" id="rives" data-scene="rives">
+    <header class="wrap real-head">
+      <h2 class="sec-title" data-split>Entre Paris et La Réunion, une seule équipe</h2>
+      <p data-reveal class="sec-lede">GD Réseau est présent à Paris et sur l’île de La Réunion, où se trouve son siège, à Sainte-Clotilde.</p>
+    </header>
+    <div class="wrap rives-grid">
+      <div>
+        <p class="distance" aria-label="9 365 kilomètres entre Paris et La Réunion"><span data-count="9365" data-format="fr">9 365</span><small>km</small></p>
+        <p class="note">Distance à vol d’oiseau entre Paris et Saint-Denis de La Réunion.</p>
+        <div class="rives-cards">
+          <article class="rive">
+            <div class="media"><div class="ph" data-ph="rives-paris-2x3"></div></div>
+            <div class="rive-info"><p class="rive-city">Paris</p><p class="rive-time"><time data-clock="Europe/Paris">--:--</time></p></div>
+          </article>
+          <article class="rive">
+            <div class="media"><div class="ph" data-ph="rives-reunion-2x3"></div></div>
+            <div class="rive-info"><p class="rive-city">La Réunion</p><p class="rive-time"><time data-clock="Indian/Reunion">--:--</time></p><p class="open" data-open>Horaires 9h – 17h</p></div>
+          </article>
+        </div>
+      </div>
+      <div class="rives-map" aria-hidden="true">
+        <svg viewBox="0 0 640 440">
+          <g class="grat-g"></g>
+          <g class="pt-paris"><circle class="map-ring" r="14"/><circle class="map-pt" r="4"/><text class="map-lbl" x="14" y="-14">Paris</text></g>
+          <g class="pt-reunion"><circle class="map-ring" r="14"/><circle class="map-pt" r="4"/><text class="map-lbl" x="-16" y="32" text-anchor="end">La Réunion</text><text class="map-sub" x="-16" y="50" text-anchor="end">Siège, Sainte-Clotilde</text></g>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- Témoignages -->
+  <section class="sec temoignages" id="temoignages" data-scene="dim" data-backdrop-key="temoignages">
+    <div class="wrap">
+      <h2 class="sec-title" data-split>Ils en parlent</h2>
+      <figure class="quote">
+        <blockquote>
+          <p class="quote-text">Une très agréable collaboration avec Gilles. Nous travaillons en binôme, chacun sa spécialité, mais des échanges constructifs et toujours un souci de service pour le client, au cœur de ses préoccupations. Gilles aime la <span class="mark">précision</span>, le <span class="mark">détail</span> et sait mettre en avant les bons arguments au bon moment.</p>
+        </blockquote>
+        <figcaption><a href="https://www.linkedin.com/in/maude-henriot-858bb515/" target="_blank" rel="noopener">Maude Henriot</a><span class="todo">Fonction à compléter</span></figcaption>
+      </figure>
+      <p class="note" style="margin-top:28px">Quatre autres témoignages du site actuel sont à reprendre ici.</p>
+    </div>
+  </section>
+
+  <!-- Se rencontrer -->
+  <section class="rencontre" id="rencontre" data-scene="converge" data-backdrop-key="rencontre">
+    <div class="wrap">
+      <a class="cta-big" href="rencontrer.html" data-anchor="converge">
+        <span class="cta-line">Oui, je souhaite</span>
+        <span class="cta-line">qu’on se rencontre</span>
+        <span class="cta-line">et qu’on parle de mon projet.</span>
+      </a>
+      <p class="alt">Ou appelez directement le <a href="tel:+33674916133">06 74 91 61 33</a></p>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div>
+      <img class="f-logo" src="assets/img/marque/gdreseau-logo-negatif-600.webp" width="600" height="217" alt="GD Réseau" loading="lazy">
+      <p class="muted" style="color:var(--brume);max-width:22em">Agence conseil en communication BtoB et BtoC, en réseau d’experts.</p>
+    </div>
+    <div>
+      <h2>Siège</h2>
+      <address>GD Réseau (SAS)<br>ZAC du Triangle<br>8 rue de l’Amitié<br>97490 Sainte-Clotilde, La Réunion</address>
+    </div>
+    <div>
+      <h2>Contact</h2>
+      <ul>
+        <li><a href="tel:+33674916133">06 74 91 61 33</a></li>
+        <li><a href="mailto:gdreseau@gmail.com">gdreseau@gmail.com</a></li>
+        <li>Horaires : 9h – 17h</li>
+        <li><span class="open" data-open></span></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Suivre et consulter</h2>
+      <ul>
+        <li><a href="https://fr.linkedin.com/in/gilles-decomps-83a52233" target="_blank" rel="noopener">LinkedIn de Gilles Decomps</a></li>
+        <li><a href="https://www.facebook.com/GDReseau/" target="_blank" rel="noopener">Facebook</a></li>
+        <li><a href="mentions-legales.html">Mentions légales</a></li>
+        <li><button class="calm-toggle" type="button" aria-pressed="false">Réduire les animations</button></li>
+      </ul>
+    </div>
+  </div>
+  <svg class="f-word" viewBox="0 0 1400 220" aria-hidden="true"><text x="4" y="186">GD Réseau</text></svg>
+  <div class="wrap f-legal"><span>© 2026 GD Réseau</span><span>Maquette de démonstration, contenus à valider</span></div>
+</footer>
+
+<script defer src="assets/js/vendor/gsap.min.js"></script>
+<script defer src="assets/js/vendor/ScrollTrigger.min.js"></script>
+<script defer src="assets/js/vendor/SplitText.min.js"></script>
+<script defer src="assets/js/vendor/DrawSVGPlugin.min.js"></script>
+<script defer src="assets/js/vendor/lenis.min.js"></script>
+<script type="module" src="assets/js/site.js"></script>
+</body>
+</html>
