@@ -542,6 +542,7 @@ function sectionNav() {
         if (!self.isActive) return;
         links.forEach((l) => { l.classList.toggle('is-on', l === a); if (l === a) l.setAttribute('aria-current', 'true'); else l.removeAttribute('aria-current'); });
         nav.classList.toggle('is-light', sec.classList.contains('is-light'));
+        nav.classList.toggle('is-muted', sec.id === 'realisations');
       },
     });
   });
@@ -624,12 +625,12 @@ function manifeste() {
   if (mimg) tl.fromTo(mimg, { scale: 1.16, yPercent: -3 }, { scale: 1, yPercent: 0, ease: 'none', duration: tl.duration() }, 0);
   if (calm) { tl.progress(1); return; }
   const sec = $('#manifeste');
-  ScrollTrigger.create({
-    trigger: sec,
-    start: mobile ? 'top 75%' : 'top top',
-    end: mobile ? 'bottom 40%' : 'bottom bottom',
-    scrub: 0.8,
-    animation: tl,
+  const mmM = gsap.matchMedia();
+  mmM.add('(min-width: 901px) and (min-height: 700px)', () => {
+    ScrollTrigger.create({ trigger: sec, start: 'top top', end: 'bottom bottom', scrub: 0.8, animation: tl });
+  });
+  mmM.add('(max-width: 900px), (max-height: 699px)', () => {
+    ScrollTrigger.create({ trigger: sec, start: 'top 75%', end: 'bottom 40%', scrub: 0.8, animation: tl });
   });
 }
 
@@ -794,13 +795,29 @@ function realisations() {
   }, { passive: true });
   if (calm) return; // défilement horizontal natif (classe tl-native)
   const mm = gsap.matchMedia();
-  mm.add('(min-width: 901px)', () => {
+  const pinEl = $('.real-pin', sec);
+  // la carte entière (image + légende) doit tenir dans la hauteur de l'écran
+  const clipsEls = $$('.clip', sec);
+  const capH = () => Math.max(...clipsEls.map((c) => c.offsetHeight - ($('.media', c)?.offsetHeight || 0)));
+  const sizeClips = () => {
+    sec.classList.remove('is-compact');
+    const avail = () => innerHeight - (track.getBoundingClientRect().top - pinEl.getBoundingClientRect().top) - capH() - 18;
+    const apply = (v) => sec.style.setProperty('--mh', Math.floor(Math.max(150, Math.min(v, innerWidth * 0.38 * 0.75, 440))) + 'px');
+    apply(avail());
+    if (avail() < 250) sec.classList.add('is-compact');
+    // deux passes : la légende peut changer de hauteur avec la largeur de la carte
+    apply(avail());
+    apply(avail());
+  };
+  mm.add('(min-width: 901px) and (min-height: 480px)', () => {
     sec.classList.remove('tl-native');
     vp.scrollLeft = 0;
+    sizeClips();
+    ScrollTrigger.addEventListener('refreshInit', sizeClips);
     const dist = () => Math.max(0, track.scrollWidth - vp.clientWidth);
     const tween = gsap.to(track, { x: () => -dist(), ease: 'none' });
     const st = ScrollTrigger.create({
-      trigger: sec, pin: $('.real-pin', sec), start: 'top top', end: () => '+=' + dist() * 1.05,
+      trigger: pinEl, pin: pinEl, start: 'top top', end: () => '+=' + dist() * 1.05,
       scrub: 0.8, animation: tween, invalidateOnRefresh: true, anticipatePin: 1,
       onUpdate: (self) => { tc.textContent = fmtTC(self.progress); },
     });
@@ -827,6 +844,9 @@ function realisations() {
     };
     sec.addEventListener('focusin', onFocus);
     return () => {
+      ScrollTrigger.removeEventListener('refreshInit', sizeClips);
+      sec.classList.remove('is-compact');
+      sec.style.removeProperty('--mh');
       sec.removeEventListener('focusin', onFocus);
       sec.classList.add('tl-native');
       gsap.set(track, { clearProps: 'transform' });

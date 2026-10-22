@@ -404,7 +404,7 @@ export function createConstellation({ canvas, labelsEl, reduced = false, force2D
   // --- rendu WebGL
   let render;
   if (useGL) {
-    const dpr = Math.min(window.devicePixelRatio || 1, mobile ? 1.5 : 2);
+    const dpr = Math.max(1, Math.min(window.devicePixelRatio || 1, mobile ? 1.5 : 2, 3200 / Math.max(1, window.innerWidth)));
     const renderer = new Renderer({ canvas, dpr, alpha: true, premultipliedAlpha: true, antialias: false, depth: false });
     const gl = renderer.gl;
     gl.clearColor(0, 0, 0, 0);
