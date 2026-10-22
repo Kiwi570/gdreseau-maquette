@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Page introuvable · GD Réseau</title>
+<meta name="description" content="Cette page n’existe pas ou a changé d’adresse.">
+<meta property="og:title" content="Page introuvable · GD Réseau">
+<meta property="og:description" content="Cette page n’existe pas ou a changé d’adresse.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://gdreseau-maquette.vercel.app/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="GD Réseau, création et communication, un réseau d’experts entre Paris et La Réunion">
+<meta property="og:url" content="https://gdreseau-maquette.vercel.app/">
+<meta property="og:site_name" content="GD Réseau">
+<meta property="og:locale" content="fr_FR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="robots" content="noindex, nofollow">
+<link rel="canonical" href="https://gdreseau-maquette.vercel.app/">
+<meta name="theme-color" content="#0e0c24">
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preload" href="/assets/fonts/unbounded.woff" as="font" type="font/woff" crossorigin>
+<link rel="preload" href="/assets/fonts/manrope.woff" as="font" type="font/woff" crossorigin>
+<link rel="stylesheet" href="/assets/css/main.css">
+<script>
+  (function () {
+    var d = document.documentElement, calm = false;
+    d.classList.add('js');
+    var pref = null;
+    try { pref = localStorage.getItem('gd-anim'); } catch (e) {}
+    calm = pref === 'calme' || (pref !== 'normal' && matchMedia('(prefers-reduced-motion: reduce)').matches);
+    if (calm) d.classList.add('is-calm');
+    try { if (sessionStorage.getItem('gd-transition')) d.classList.add('is-arriving'); } catch (e) {}
+    setTimeout(function () { if (!d.classList.contains('is-ready')) { d.classList.remove('js', 'is-arriving', 'is-intro'); } }, 4000);
+  })();
+</script>
+</head>
+<body data-page="introuvable">
+<a class="skip" href="#contenu">Aller au contenu</a>
+<div class="backdrop" aria-hidden="true">
+
+</div>
+<canvas id="constellation" aria-hidden="true"></canvas>
+<div id="constellation-labels" class="c-labels" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+<div class="veil" aria-hidden="true"></div>
+<div class="cursor" aria-hidden="true"><svg class="cursor-tether"><line x1="0" y1="0" x2="0" y2="0"/></svg><span class="cursor-dot"></span></div>
+
+<header class="site-header">
+  <a class="brand" href="/index.html" aria-label="GD Réseau, accueil"><img src="/assets/img/marque/gdreseau-logo-negatif-600.webp" width="600" height="217" alt="GD Réseau, réseau de communication avancé"></a>
+  <nav class="nav" aria-label="Navigation principale">
+    <a href="/index.html#services">Services</a>
+    <a href="/index.html#realisations">Réalisations</a>
+    <a href="/index.html#reseau">Le réseau</a>
+    <a href="/index.html#rives">Nous trouver</a>
+  </nav>
+  <a class="btn btn--small" data-magnetic href="/rencontrer.html"><span class="dot" aria-hidden="true"></span>Se rencontrer</a>
+  <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="menu">Menu</button>
+</header>
+<div class="menu" id="menu" hidden>
+  <nav aria-label="Menu">
+    <a href="/index.html#services">Services</a>
+    <a href="/index.html#realisations">Réalisations</a>
+    <a href="/wope.html">Wopé</a>
+    <a href="/index.html#reseau">Le réseau</a>
+    <a href="/index.html#rives">Nous trouver</a>
+    <a href="/rencontrer.html">Se rencontrer</a>
+  </nav>
+  <div class="menu-foot">
+    <a href="tel:+33674916133">06 74 91 61 33</a>
+    <a href="mailto:gdreseau@gmail.com">gdreseau@gmail.com</a>
+  </div>
+</div>
+
+<main id="contenu">
+  <section class="page-hero page-404" data-scene="sky">
+    <div class="wrap">
+      <p class="eyeline" data-hero>Erreur 404</p>
+      <h1 class="page-title is-medium">Cette page s’est perdue dans la constellation</h1>
+      <p class="page-sub" data-hero>L’adresse demandée n’existe pas ou a changé. Reprenez depuis l’accueil ou parlez-nous directement de votre projet.</p>
+      <div class="hero-actions" data-hero style="margin-top:28px">
+        <a class="btn btn--primary" data-magnetic href="/index.html">Revenir à l’accueil</a>
+        <a class="link-draw" href="/rencontrer.html">Se rencontrer</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div>
+      <img class="f-logo" src="/assets/img/marque/gdreseau-logo-negatif-600.webp" width="600" height="217" alt="GD Réseau" loading="lazy">
+      <p class="muted" style="color:var(--brume);max-width:22em">Agence conseil en communication BtoB et BtoC, en réseau d’experts.</p>
+    </div>
+    <div>
+      <h2>Siège</h2>
+      <address>GD Réseau (SAS)<br>ZAC du Triangle<br>8 rue de l’Amitié<br>97490 Sainte-Clotilde, La Réunion</address>
+    </div>
+    <div>
+      <h2>Contact</h2>
+      <ul>
+        <li><a href="tel:+33674916133">06 74 91 61 33</a></li>
+        <li><a href="mailto:gdreseau@gmail.com">gdreseau@gmail.com</a></li>
+        <li>Horaires : 9h – 17h</li>
+        <li><span class="open" data-open></span></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Suivre et consulter</h2>
+      <ul>
+        <li><a href="https://fr.linkedin.com/in/gilles-decomps-83a52233" target="_blank" rel="noopener">LinkedIn de Gilles Decomps</a></li>
+        <li><a href="https://www.facebook.com/GDReseau/" target="_blank" rel="noopener">Facebook</a></li>
+        <li><a href="/mentions-legales.html">Mentions légales</a></li>
+        <li><button class="calm-toggle" type="button" aria-pressed="false">Réduire les animations</button></li>
+      </ul>
+    </div>
+  </div>
+  <svg class="f-word" viewBox="0 0 1400 220" aria-hidden="true"><text x="4" y="186">GD Réseau</text></svg>
+  <div class="wrap f-legal"><span>© 2026 GD Réseau</span><span>Maquette de démonstration, contenus à valider</span></div>
+</footer>
+
+<script defer src="/assets/js/vendor/gsap.min.js"></script>
+<script defer src="/assets/js/vendor/ScrollTrigger.min.js"></script>
+<script defer src="/assets/js/vendor/SplitText.min.js"></script>
+<script defer src="/assets/js/vendor/DrawSVGPlugin.min.js"></script>
+<script defer src="/assets/js/vendor/lenis.min.js"></script>
+<script type="module" src="/assets/js/site.js"></script>
+</body>
+</html>

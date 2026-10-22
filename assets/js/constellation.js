@@ -89,17 +89,21 @@ export function createConstellation({ canvas, labelsEl, reduced = false, force2D
     st.layout = name;
     st.opts = opts;
     st.active = new Set(opts.active || []);
+    st.activeSorted = [...st.active].sort((a, b) => a - b);
+    st.dirty = true;
     st.labelTarget = opts.labels ?? (name === 'team' ? 1 : name === 'sky' && !mobile ? 0.55 : 0);
     st.globalTarget = opts.dim ?? 1;
     st.drift = { sky: mobile ? 9 : 14, logo: 1.2, team: 5, rives: 7, converge: 3, point: 0 }[name] ?? 10;
     if (reduced) snap();
   };
-  const setActive = (list) => { st.active = new Set(list); };
+  const setActive = (list) => { st.active = new Set(list); st.activeSorted = [...st.active].sort((a, b) => a - b); st.dirty = true; };
 
   // --- cibles
+  const frameCache = new Map();
   function anchorOf(o, fallback) {
-    const v = typeof o === 'function' ? o() : o;
-    return v || fallback;
+    if (typeof o !== 'function') return o || fallback;
+    if (!frameCache.has(o)) frameCache.set(o, o());
+    return frameCache.get(o) || fallback;
   }
 
   function computeTargets() {
@@ -189,33 +193,37 @@ export function createConstellation({ canvas, labelsEl, reduced = false, force2D
     segA[nseg] = a; segC[nseg] = c; nseg++;
   };
 
-  // grille pour la recherche de voisins
-  const grid = new Map();
+  // grille de voisinage en tableaux typés (aucune allocation par image)
+  let cellHead = new Int32Array(4096);
+  const cellNext = new Int32Array(N);
   function linkByDistance(from, to, dmax, amp, c = 0, maxPer = 4) {
-    grid.clear();
     const cs = dmax;
+    const cols = Math.ceil(W / cs) + 3, rows = Math.ceil(H / cs) + 3, size = cols * rows;
+    if (size > cellHead.length) cellHead = new Int32Array(size);
+    cellHead.fill(-1, 0, size);
+    const cxOf = (v) => { const k = Math.floor(v / cs) + 1; return k < 0 ? 0 : k >= cols ? cols - 1 : k; };
+    const cyOf = (v) => { const k = Math.floor(v / cs) + 1; return k < 0 ? 0 : k >= rows ? rows - 1 : k; };
     for (let i = from; i < to; i++) {
-      const key = ((px[i] / cs) | 0) * 73856093 ^ ((py[i] / cs) | 0) * 19349663;
-      let b = grid.get(key);
-      if (!b) grid.set(key, (b = []));
-      b.push(i);
+      const k = cxOf(px[i]) + cyOf(py[i]) * cols;
+      cellNext[i] = cellHead[k];
+      cellHead[k] = i;
     }
     const d2max = dmax * dmax;
     for (let i = from; i < to; i++) {
-      const gx0 = (px[i] / cs) | 0, gy0 = (py[i] / cs) | 0;
+      const gx0 = cxOf(px[i]), gy0 = cyOf(py[i]);
       let count = 0;
-      for (let ox = -1; ox <= 1 && count < maxPer; ox++) {
-        for (let oy = -1; oy <= 1 && count < maxPer; oy++) {
-          const b = grid.get(((gx0 + ox) * 73856093) ^ ((gy0 + oy) * 19349663));
-          if (!b) continue;
-          for (let m = 0; m < b.length; m++) {
-            const j = b[m];
+      for (let oy = -1; oy <= 1 && count < maxPer; oy++) {
+        const yy = gy0 + oy;
+        if (yy < 0 || yy >= rows) continue;
+        for (let ox = -1; ox <= 1 && count < maxPer; ox++) {
+          const xx = gx0 + ox;
+          if (xx < 0 || xx >= cols) continue;
+          for (let j = cellHead[xx + yy * cols]; j !== -1; j = cellNext[j]) {
             if (j <= i) continue;
             const dx = px[j] - px[i], dy = py[j] - py[i];
             const d2 = dx * dx + dy * dy;
             if (d2 < d2max) {
-              const a = (1 - Math.sqrt(d2) / dmax) * amp;
-              pushSeg(px[i], py[i], px[j], py[j], a, c);
+              pushSeg(px[i], py[i], px[j], py[j], (1 - Math.sqrt(d2) / dmax) * amp, c);
               if (++count >= maxPer) break;
             }
           }
@@ -240,7 +248,7 @@ export function createConstellation({ canvas, labelsEl, reduced = false, force2D
       }
     } else if (L === 'team') {
       linkByDistance(skyFrom, skyTo, mobile ? 80 : 110, 0.16 * g);
-      const act = [...st.active].sort((a, b) => a - b);
+      const act = st.activeSorted || [];
       for (let i = 0; i < NM; i++) {
         const on = st.active.has(i);
         pushSeg(px[i], py[i], px[PROJET], py[PROJET], (on ? 0.85 : 0.07) * g, on ? 0 : 2);
@@ -295,9 +303,10 @@ export function createConstellation({ canvas, labelsEl, reduced = false, force2D
     const dt = Math.min(0.05, (now - last) / 1000);
     last = now;
     st.time += dt;
+    frameCache.clear();
     const e6 = 1 - Math.pow(0.94, dt * 60), e8 = 1 - Math.pow(0.9, dt * 60);
-    st.global += (st.globalTarget - st.global) * e6;
-    st.labelAlpha += (st.labelTarget - st.labelAlpha) * e8;
+    st.global += (st.globalTarget - st.global) * (reduced ? 1 : e6);
+    st.labelAlpha += (st.labelTarget - st.labelAlpha) * (reduced ? 1 : e8);
     computeTargets();
     const t = st.time, dA = st.drift, m = st.mouse;
     const f = dt * 60;
@@ -321,7 +330,7 @@ export function createConstellation({ canvas, labelsEl, reduced = false, force2D
       vx[i] *= damp; vy[i] *= damp;
       px[i] += vx[i] * f; py[i] += vy[i] * f;
       const on = i < NM && st.active.has(i) ? 1 : 0;
-      act[i] += (on - act[i]) * e8;
+      act[i] += (on - act[i]) * (reduced ? 1 : e8);
     }
     buildSegments();
   }
@@ -351,6 +360,7 @@ export function createConstellation({ canvas, labelsEl, reduced = false, force2D
   // --- étiquettes des métiers
   const labels = [];
   const lws = [];
+  const lx = new Float32Array(NM), ly = new Float32Array(NM), order = Array.from({ length: NM }, (_, i) => i);
   if (labelsEl) {
     labelsEl.innerHTML = '';
     METIERS.forEach((m) => {
@@ -368,14 +378,26 @@ export function createConstellation({ canvas, labelsEl, reduced = false, force2D
     if (A < 0.01) return;
     const cx = st.opts.anchor ? anchorOf(st.opts.anchor, { x: W / 2 }).x : (mobile ? W * 0.5 : W * 0.72);
     for (let i = 0; i < NM; i++) {
-      const l = labels[i];
-      const on = act[i];
+      const lw = lws[i] || (lws[i] = labels[i].offsetWidth);
       const left = px[i] < cx - 4;
-      const lw = lws[i] || (lws[i] = l.offsetWidth);
       let x = left ? px[i] - 14 - lw : px[i] + 14;
-      x = Math.max(6, Math.min(W - 6 - lw, x));
-      l.style.transform = `translate3d(${x.toFixed(1)}px, ${(py[i] - 9).toFixed(1)}px, 0)`;
-      l.classList.toggle('is-on', on > 0.5);
+      lx[i] = Math.max(6, Math.min(W - 6 - lw, x));
+      ly[i] = py[i] - 9;
+      order[i] = i;
+    }
+    // anti-chevauchement : on décale vers le bas les étiquettes qui se recouvrent
+    order.sort((a, b) => ly[a] - ly[b]);
+    for (let m = 1; m < NM; m++) {
+      const j = order[m];
+      for (let q = 0; q < m; q++) {
+        const i = order[q];
+        const overlapX = lx[j] < lx[i] + lws[i] + 6 && lx[i] < lx[j] + lws[j] + 6;
+        if (overlapX && ly[j] < ly[i] + 17) ly[j] = ly[i] + 17;
+      }
+    }
+    for (let i = 0; i < NM; i++) {
+      labels[i].style.transform = `translate3d(${lx[i].toFixed(1)}px, ${ly[i].toFixed(1)}px, 0)`;
+      labels[i].classList.toggle('is-on', act[i] > 0.5);
     }
   }
 
@@ -435,7 +457,8 @@ export function createConstellation({ canvas, labelsEl, reduced = false, force2D
       pGeo.attributes.color.needsUpdate = true;
       pGeo.attributes.size.needsUpdate = true;
       for (let s = 0; s < nseg; s++) {
-        lPos.set(seg.subarray(s * 4, s * 4 + 4), s * 4);
+        const q = s * 4;
+        lPos[q] = seg[q]; lPos[q + 1] = seg[q + 1]; lPos[q + 2] = seg[q + 2]; lPos[q + 3] = seg[q + 3];
         const c = segCol[segC[s]], a = Math.min(1, segA[s]);
         const o = s * 8;
         lCol[o] = lCol[o + 4] = c[0]; lCol[o + 1] = lCol[o + 5] = c[1]; lCol[o + 2] = lCol[o + 6] = c[2];
@@ -474,15 +497,24 @@ export function createConstellation({ canvas, labelsEl, reduced = false, force2D
     };
     const tmp = new Float32Array(5);
     const segStyle = ['29,181,213', '255,107,87', '238,242,248'];
+    const buckets = Array.from({ length: 30 }, () => []);
     render = () => {
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       ctx.clearRect(0, 0, W, H);
       ctx.globalCompositeOperation = 'lighter';
       ctx.lineWidth = 1;
+      for (let b = 0; b < buckets.length; b++) buckets[b].length = 0;
       for (let s = 0; s < nseg; s++) {
-        const j = s * 4;
-        ctx.strokeStyle = `rgba(${segStyle[segC[s]]},${Math.min(1, segA[s]).toFixed(2)})`;
-        ctx.beginPath(); ctx.moveTo(seg[j], seg[j + 1]); ctx.lineTo(seg[j + 2], seg[j + 3]); ctx.stroke();
+        const lvl = Math.min(9, Math.max(0, Math.round(Math.min(1, segA[s]) * 9)));
+        buckets[segC[s] * 10 + lvl].push(s);
+      }
+      for (let b = 0; b < buckets.length; b++) {
+        const list = buckets[b];
+        if (!list.length) continue;
+        ctx.strokeStyle = `rgba(${segStyle[(b / 10) | 0]},${((b % 10) / 9).toFixed(2)})`;
+        ctx.beginPath();
+        for (let k = 0; k < list.length; k++) { const j = list[k] * 4; ctx.moveTo(seg[j], seg[j + 1]); ctx.lineTo(seg[j + 2], seg[j + 3]); }
+        ctx.stroke();
       }
       for (let i = 0; i < N; i++) {
         pointStyle(i, tmp);
@@ -505,6 +537,7 @@ export function createConstellation({ canvas, labelsEl, reduced = false, force2D
     if (ow && oh) for (let i = 0; i < N; i++) { px[i] *= W / ow; py[i] *= H / oh; }
     render.resize();
     lws.length = 0;
+    st.dirty = true;
     if (reduced) snap();
   }
   resize();
@@ -517,6 +550,7 @@ export function createConstellation({ canvas, labelsEl, reduced = false, force2D
     if (!st.running || document.hidden) { last = now; return; }
     if ((frameSkip++ & 15) === 0 && !visible()) { st.hidden = true; } else if ((frameSkip & 15) === 1) { st.hidden = !visible(); }
     if (st.hidden) { last = now; return; }
+    if (reduced) { if (!st.dirty) { last = now; return; } st.dirty = false; }
     step(now);
     render();
     drawLabels();
@@ -524,6 +558,7 @@ export function createConstellation({ canvas, labelsEl, reduced = false, force2D
   raf = requestAnimationFrame(loop);
 
   window.addEventListener('resize', () => { resize(); }, { passive: true });
+  window.addEventListener('scroll', () => { st.dirty = true; }, { passive: true });
   if (!mobile) {
     window.addEventListener('pointermove', (e) => {
       if (e.pointerType !== 'mouse') return;
@@ -538,8 +573,8 @@ export function createConstellation({ canvas, labelsEl, reduced = false, force2D
     renderer: useGL ? 'webgl' : 'canvas2d',
     setLayout,
     setActive,
-    setDim: (v) => { st.globalTarget = v; },
-    setLabels: (v) => { st.labelTarget = v; },
+    setDim: (v) => { st.globalTarget = v; st.dirty = true; },
+    setLabels: (v) => { st.labelTarget = v; st.dirty = true; },
     get layout() { return st.layout; },
     snap,
     stop: () => { st.running = false; cancelAnimationFrame(raf); },

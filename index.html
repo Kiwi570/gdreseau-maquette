@@ -8,7 +8,16 @@
 <meta property="og:title" content="GD Réseau · Un réseau d’experts en création et communication">
 <meta property="og:description" content="Agence conseil en communication BtoB et BtoC, en réseau d’experts. Paris et La Réunion.">
 <meta property="og:type" content="website">
-<meta property="og:image" content="assets/img/marque/gdreseau-logo-couleur-1200.webp">
+<meta property="og:image" content="https://gdreseau-maquette.vercel.app/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="GD Réseau, création et communication, un réseau d’experts entre Paris et La Réunion">
+<meta property="og:url" content="https://gdreseau-maquette.vercel.app/">
+<meta property="og:site_name" content="GD Réseau">
+<meta property="og:locale" content="fr_FR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="robots" content="noindex, nofollow">
+<link rel="canonical" href="https://gdreseau-maquette.vercel.app/">
 <meta name="theme-color" content="#0e0c24">
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -19,14 +28,23 @@
   (function () {
     var d = document.documentElement, calm = false;
     d.classList.add('js');
-    try { calm = localStorage.getItem('gd-anim') === 'calme'; } catch (e) {}
-    if (calm || matchMedia('(prefers-reduced-motion: reduce)').matches) d.classList.add('is-calm');
+    var pref = null;
+    try { pref = localStorage.getItem('gd-anim'); } catch (e) {}
+    calm = pref === 'calme' || (pref !== 'normal' && matchMedia('(prefers-reduced-motion: reduce)').matches);
+    if (calm) d.classList.add('is-calm');
     try { if (sessionStorage.getItem('gd-transition')) d.classList.add('is-arriving'); } catch (e) {}
     setTimeout(function () { if (!d.classList.contains('is-ready')) { d.classList.remove('js', 'is-arriving', 'is-intro'); } }, 4000);
   })();
 </script>
 </head>
 <body data-page="accueil">
+<script>
+  (function () {
+    var d = document.documentElement, seen = false, arriving = d.classList.contains('is-arriving');
+    try { seen = !!sessionStorage.getItem('gd-intro'); } catch (e) {}
+    if (!seen && !arriving && !location.hash && !d.classList.contains('is-calm')) d.classList.add('is-intro');
+  })();
+</script>
 <a class="skip" href="#contenu">Aller au contenu</a>
 
 <div class="backdrop" aria-hidden="true">
@@ -69,12 +87,24 @@
 </div>
 
 <main id="contenu">
+  <nav class="sec-nav" aria-label="Sections de la page">
+    <a href="#intro"><span>Accueil</span></a>
+    <a href="#manifeste"><span>Un réseau</span></a>
+    <a href="#services"><span>Services</span></a>
+    <a href="#faisons"><span>Nous faisons</span></a>
+    <a href="#pensons"><span>Nous pensons</span></a>
+    <a href="#realisations"><span>Réalisations</span></a>
+    <a href="#reseau"><span>L’équipe</span></a>
+    <a href="#rives"><span>Paris et La Réunion</span></a>
+    <a href="#temoignages"><span>Témoignages</span></a>
+    <a href="#rencontre"><span>Se rencontrer</span></a>
+  </nav>
 
   <!-- Ouverture -->
   <section class="hero" id="intro" data-scene="sky" data-backdrop-key="hero">
     <div class="hero-inner wrap">
       <p class="hero-kicker" data-hero>Un réseau d’experts en</p>
-      <h1 class="hero-title"><span class="t1">Création</span><span class="t2">&amp; communication</span></h1>
+      <h1 class="hero-title" aria-label="Création et communication"><span class="t1">Création</span><span class="t2">&amp; communication</span></h1>
       <div class="hero-bottom">
         <div>
           <p class="hero-lede" data-hero>Nous plaçons l’humain et l’authenticité au cœur de la marque.</p>
@@ -96,7 +126,7 @@
   <section class="preuves" id="preuves" data-scene="dim">
     <div class="wrap preuves-grid">
       <div class="prix">
-        <div class="leader" data-leader aria-hidden="true"><span class="leader-num"><span class="leader-n">8</span><span class="prix-sup">e</span></span></div>
+        <div class="leader" data-leader aria-hidden="true"><span class="leader-num"><span class="leader-n">3</span><span class="prix-sup">e</span></span></div>
         <div class="prix-text">
           <img class="prix-logo" src="assets/img/prix/creatives-logo-309.webp" width="309" height="163" alt="Creatives, concours des meilleures créations publicitaires" loading="lazy">
           <strong>3<sup>e</sup> prix, catégorie Films, 2021</strong>
@@ -105,7 +135,7 @@
         </div>
       </div>
       <div>
-        <p class="clients-label">Ils nous ont confié leur communication</p>
+        <p class="clients-label">Ils nous ont confié un projet</p>
         <div class="marquee">
           <div class="marquee-track">
             <span class="plaque"><img src="assets/img/clients/crc-logo-600.webp" width="600" height="341" alt="Groupe CRC, Caisses Réunionnaises Complémentaires" loading="lazy"></span>
@@ -128,14 +158,13 @@
           <p data-reveal>Expérimentés, souples, disponibles et réactifs sans contraintes, nos experts des métiers de la communication sont reliés par l’envie.</p>
         </div>
         <div class="manifeste-visual">
-          <svg class="org" viewBox="0 0 600 440" role="img" aria-labelledby="org-t">
+          <svg class="org" viewBox="0 0 600 400" role="img" aria-labelledby="org-t">
             <title id="org-t">Un organigramme pyramidal se défait et devient un réseau horizontal d’experts.</title>
             <g class="o-lines"></g>
             <g class="n-lines"></g>
             <g class="o-nodes"></g>
-            <text class="o-cap o-cap-a" x="0" y="430">Une agence classique : une hiérarchie, des frais de structure.</text>
-            <text class="o-cap o-cap-b" x="0" y="430" opacity="0">GD Réseau : des experts reliés, mobilisés selon le projet.</text>
           </svg>
+          <p class="org-cap"><span class="o-cap-a">Une agence classique : une hiérarchie, des frais de structure.</span><span class="o-cap-b">GD Réseau : des experts reliés, mobilisés selon le projet.</span></p>
           <div class="manifeste-photo media" data-parallax="-12"><img src="assets/img/ambiance/manifeste-atelier-2x3-800.webp" srcset="assets/img/ambiance/manifeste-atelier-2x3-480.webp 480w, assets/img/ambiance/manifeste-atelier-2x3-800.webp 800w" sizes="(max-width: 900px) 52vw, 16vw" width="800" height="1200" alt="" loading="lazy" decoding="async"></div>
         </div>
       </div>
@@ -150,29 +179,29 @@
         <p class="sec-lede" data-reveal>Chaque projet réunit les métiers dont il a besoin. Choisissez un service pour voir l’équipe qui se forme.</p>
         <ul class="svc-list">
           <li class="svc is-active is-open" data-team="0,3,6,5,4,7">
-            <button class="svc-btn" type="button" aria-expanded="true"><span class="svc-name">Création et design</span></button>
-            <div class="svc-body">
+            <button class="svc-btn" type="button" aria-controls="svc-b1" aria-expanded="true"><span class="svc-name">Création et design</span></button>
+            <div class="svc-body" id="svc-b1">
               <div class="svc-card"><div class="media" data-tilt><img src="assets/img/ambiance/service-creation-2x3-600.webp" srcset="assets/img/ambiance/service-creation-2x3-360.webp 360w, assets/img/ambiance/service-creation-2x3-600.webp 600w" sizes="(max-width: 1100px) 130px, 180px" width="600" height="900" alt="" loading="lazy" decoding="async"></div></div>
               <p class="svc-team"><strong>Équipe type :</strong> directeurs artistiques, designers graphiques, infographistes multimédia, web designers, photographes, avec un chef de projet.</p>
             </div>
           </li>
           <li class="svc" data-team="0,1,2,8,7">
-            <button class="svc-btn" type="button" aria-expanded="false"><span class="svc-name">Contenu marketing</span></button>
-            <div class="svc-body">
+            <button class="svc-btn" type="button" aria-controls="svc-b2" aria-expanded="false"><span class="svc-name">Contenu marketing</span></button>
+            <div class="svc-body" id="svc-b2">
               <div class="svc-card"><div class="media" data-tilt><img src="assets/img/ambiance/service-contenu-2x3-600.webp" srcset="assets/img/ambiance/service-contenu-2x3-360.webp 360w, assets/img/ambiance/service-contenu-2x3-600.webp 600w" sizes="(max-width: 1100px) 130px, 180px" width="600" height="900" alt="" loading="lazy" decoding="async"></div></div>
               <p class="svc-team"><strong>Équipe type :</strong> concepteurs, rédacteurs, réalisateurs, photographes, avec un chef de projet.</p>
             </div>
           </li>
           <li class="svc" data-team="0,2,1,7">
-            <button class="svc-btn" type="button" aria-expanded="false"><span class="svc-name">Relations publiques</span></button>
-            <div class="svc-body">
+            <button class="svc-btn" type="button" aria-controls="svc-b3" aria-expanded="false"><span class="svc-name">Relations publiques</span></button>
+            <div class="svc-body" id="svc-b3">
               <div class="svc-card"><div class="media" data-tilt><img src="assets/img/ambiance/service-rp-2x3-600.webp" srcset="assets/img/ambiance/service-rp-2x3-360.webp 360w, assets/img/ambiance/service-rp-2x3-600.webp 600w" sizes="(max-width: 1100px) 130px, 180px" width="600" height="900" alt="" loading="lazy" decoding="async"></div></div>
               <p class="svc-team"><strong>Équipe type :</strong> rédacteurs, concepteurs, photographes, avec un chef de projet.</p>
             </div>
           </li>
           <li class="svc" data-team="0,1,2,5,8">
-            <button class="svc-btn" type="button" aria-expanded="false"><span class="svc-name">Réseaux sociaux</span></button>
-            <div class="svc-body">
+            <button class="svc-btn" type="button" aria-controls="svc-b4" aria-expanded="false"><span class="svc-name">Réseaux sociaux</span></button>
+            <div class="svc-body" id="svc-b4">
               <div class="svc-card"><div class="media" data-tilt><img src="assets/img/ambiance/service-reseaux-2x3-600.webp" srcset="assets/img/ambiance/service-reseaux-2x3-360.webp 360w, assets/img/ambiance/service-reseaux-2x3-600.webp 600w" sizes="(max-width: 1100px) 130px, 180px" width="600" height="900" alt="" loading="lazy" decoding="async"></div></div>
               <p class="svc-team"><strong>Équipe type :</strong> concepteurs, rédacteurs, infographistes multimédia, réalisateurs, avec un chef de projet.</p>
             </div>
@@ -280,7 +309,7 @@
   </section>
 
   <!-- Réalisations -->
-  <section class="real" id="realisations" data-scene="dim">
+  <section class="real tl-native" id="realisations" data-scene="dim">
     <div class="real-pin">
       <header class="wrap real-head">
         <h2 class="sec-title" data-split>Nos réalisations</h2>
@@ -342,22 +371,22 @@
       <div class="metiers-net">
         <svg aria-hidden="true"></svg>
         <ul class="metiers" aria-label="Les métiers du réseau">
-          <li tabindex="0">Chefs de projet</li>
-          <li tabindex="0">Concepteurs</li>
-          <li tabindex="0">Rédacteurs</li>
-          <li tabindex="0">Directeurs artistiques</li>
-          <li tabindex="0">Web designers</li>
-          <li tabindex="0">Infographistes multimédia</li>
-          <li tabindex="0">Designers graphiques</li>
-          <li tabindex="0">Photographes</li>
-          <li tabindex="0">Réalisateurs</li>
+          <li>Chefs de projet</li>
+          <li>Concepteurs</li>
+          <li>Rédacteurs</li>
+          <li>Directeurs artistiques</li>
+          <li>Web designers</li>
+          <li>Infographistes multimédia</li>
+          <li>Designers graphiques</li>
+          <li>Photographes</li>
+          <li>Réalisateurs</li>
         </ul>
       </div>
       <ul class="portraits">
         <li><figure class="portrait"><div class="media" data-wipe><img src="assets/img/equipe/portrait-homme-maquette-avion-480.webp" width="480" height="480" alt="Portrait en noir et blanc d’un membre de l’équipe tenant une maquette d’avion." loading="lazy"></div><figcaption><span class="p-name todo">Prénom à compléter</span><span class="p-role">Rôle à compléter</span></figcaption></figure></li>
         <li><figure class="portrait"><div class="media" data-wipe><img src="assets/img/equipe/damien-430.webp" width="430" height="400" alt="Portrait en noir et blanc de Damien." loading="lazy"></div><figcaption><span class="p-name">Damien</span><span class="p-role">Rôle à compléter</span></figcaption></figure></li>
         <li><figure class="portrait"><div class="media" data-wipe><img src="assets/img/equipe/portrait-femme-lunettes-480.webp" width="480" height="480" alt="Portrait en noir et blanc d’une membre de l’équipe." loading="lazy"></div><figcaption><span class="p-name todo">Prénom à compléter</span><span class="p-role">Rôle à compléter</span></figcaption></figure></li>
-        <li><figure class="portrait"><div class="media" data-wipe><img src="assets/img/equipe/portrait-femme-brune-427.webp" width="427" height="640" alt="Portrait en noir et blanc d’une membre de l’équipe." loading="lazy" style="object-position:50% 25%"></div><figcaption><span class="p-name todo">Prénom à compléter</span><span class="p-role">Rôle à compléter</span></figcaption></figure></li>
+        <li><figure class="portrait"><div class="media" data-wipe><img src="assets/img/equipe/portrait-femme-brune-356.webp" width="356" height="640" alt="Portrait en noir et blanc d’une membre de l’équipe." loading="lazy" style="object-position:50% 25%"></div><figcaption><span class="p-name todo">Prénom à compléter</span><span class="p-role">Rôle à compléter</span></figcaption></figure></li>
       </ul>
     </div>
   </section>
@@ -372,6 +401,7 @@
       <div>
         <p class="distance" aria-label="9 365 kilomètres entre Paris et La Réunion"><span data-count="9365" data-format="fr">9 365</span><small>km</small></p>
         <p class="note">Distance à vol d’oiseau entre Paris et Saint-Denis de La Réunion.</p>
+        <p class="open rives-open" data-open>Horaires du siège : 9h – 17h, heure de La Réunion</p>
         <div class="rives-cards">
           <article class="rive">
             <div class="media"><img src="assets/img/ambiance/rives-paris-2x3-800.webp" srcset="assets/img/ambiance/rives-paris-2x3-480.webp 480w, assets/img/ambiance/rives-paris-2x3-800.webp 800w" sizes="(max-width: 900px) 46vw, 22vw" width="800" height="1200" alt="" loading="lazy" decoding="async"></div>
@@ -379,7 +409,7 @@
           </article>
           <article class="rive">
             <div class="media"><img src="assets/img/ambiance/rives-reunion-2x3-800.webp" srcset="assets/img/ambiance/rives-reunion-2x3-480.webp 480w, assets/img/ambiance/rives-reunion-2x3-800.webp 800w" sizes="(max-width: 900px) 46vw, 22vw" width="800" height="1200" alt="" loading="lazy" decoding="async"></div>
-            <div class="rive-info"><p class="rive-city">La Réunion</p><p class="rive-time"><time data-clock="Indian/Reunion">--:--</time></p><p class="open" data-open>Horaires 9h – 17h</p></div>
+            <div class="rive-info"><p class="rive-city">La Réunion</p><p class="rive-time"><time data-clock="Indian/Reunion">--:--</time></p></div>
           </article>
         </div>
       </div>
@@ -414,6 +444,7 @@
         <span class="cta-line">Oui, je souhaite</span>
         <span class="cta-line">qu’on se rencontre</span>
         <span class="cta-line">et qu’on parle de mon projet.</span>
+        <span class="cta-go btn btn--primary">Préparer notre rencontre</span>
       </a>
       <p class="alt">Ou appelez directement le <a href="tel:+33674916133">06 74 91 61 33</a></p>
     </div>

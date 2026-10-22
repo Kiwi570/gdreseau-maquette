@@ -8,7 +8,16 @@
 <meta property="og:title" content="Mentions légales · GD Réseau">
 <meta property="og:description" content="Mentions légales et données personnelles du site GD Réseau.">
 <meta property="og:type" content="website">
-<meta property="og:image" content="assets/img/marque/gdreseau-logo-couleur-1200.webp">
+<meta property="og:image" content="https://gdreseau-maquette.vercel.app/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="GD Réseau, création et communication, un réseau d’experts entre Paris et La Réunion">
+<meta property="og:url" content="https://gdreseau-maquette.vercel.app/mentions-legales">
+<meta property="og:site_name" content="GD Réseau">
+<meta property="og:locale" content="fr_FR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="robots" content="noindex, nofollow">
+<link rel="canonical" href="https://gdreseau-maquette.vercel.app/mentions-legales">
 <meta name="theme-color" content="#0e0c24">
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -19,8 +28,10 @@
   (function () {
     var d = document.documentElement, calm = false;
     d.classList.add('js');
-    try { calm = localStorage.getItem('gd-anim') === 'calme'; } catch (e) {}
-    if (calm || matchMedia('(prefers-reduced-motion: reduce)').matches) d.classList.add('is-calm');
+    var pref = null;
+    try { pref = localStorage.getItem('gd-anim'); } catch (e) {}
+    calm = pref === 'calme' || (pref !== 'normal' && matchMedia('(prefers-reduced-motion: reduce)').matches);
+    if (calm) d.classList.add('is-calm');
     try { if (sessionStorage.getItem('gd-transition')) d.classList.add('is-arriving'); } catch (e) {}
     setTimeout(function () { if (!d.classList.contains('is-ready')) { d.classList.remove('js', 'is-arriving', 'is-intro'); } }, 4000);
   })();
