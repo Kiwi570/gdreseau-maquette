@@ -56,7 +56,7 @@ function paintPoster(el) {
     <text x="122" y="294" font-family="Manrope, sans-serif" font-size="22" font-weight="600" fill="#1db5d5">Un film pour Sémittel, avec Yello</text>
     <text x="122" y="370" font-family="Manrope, sans-serif" font-size="17" font-weight="700" fill="#eef2f8" opacity=".8">3e prix, catégorie Films, Creatives 2021</text>
     <g transform="translate(620 225)"><circle r="44" fill="none" stroke="#eef2f8" stroke-opacity=".8" stroke-width="2"/><path d="M-11 -19 L21 0 L-11 19 Z" fill="#eef2f8"/></g>
-  </svg><span class="ph-cap">Affiche provisoire : le film sera fourni par le client</span>`;
+  </svg><span class="ph-cap">Affiche provisoire&nbsp;: le film sera fourni par le client</span>`;
 }
 function paintPlaceholders() {
   $$('.ph').forEach((el) => {
@@ -99,7 +99,7 @@ function paintPlaceholders() {
     }
     const cap = el.closest('.backdrop')
       ? ''
-      : `<span class="ph-cap">${kind === 'film' ? 'Film Wopé à fournir par le client' : 'Visuel provisoire, image à venir : ' + name}</span>`;
+      : `<span class="ph-cap">${kind === 'film' ? 'Film Wopé à fournir par le client' : 'Visuel provisoire, image à venir\u00a0: ' + name}</span>`;
     el.innerHTML = `<svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
       <defs>
         <radialGradient id="${id}" cx="${gx}%" cy="${gy}%" r="75%"><stop offset="0" stop-color="#1db5d5" stop-opacity="${kind === 'ciel' ? 0.22 : 0.42}"/><stop offset=".55" stop-color="#2a2650" stop-opacity=".35"/><stop offset="1" stop-color="#0e0c24" stop-opacity="0"/></radialGradient>
@@ -123,10 +123,13 @@ function reunionHour() {
 function tickClocks() {
   $$('[data-clock]').forEach((t) => { t.textContent = fmtTime(t.dataset.clock); });
   const h = reunionHour();
-  const open = h >= 9 && h < 17;
+  // jours d'ouverture non confirmés : le week-end, on affiche les horaires sans statut ouvert/fermé
+  const wd = new Intl.DateTimeFormat('en-GB', { weekday: 'short', timeZone: 'Indian/Reunion' }).format(new Date());
+  const weekend = wd === 'Sat' || wd === 'Sun';
+  const open = !weekend && h >= 9 && h < 17;
   $$('[data-open]').forEach((el) => {
     el.classList.toggle('is-open', open);
-    el.textContent = open ? 'Dans les horaires du siège : 9h – 17h, heure de La Réunion' : 'Hors des horaires du siège : 9h – 17h, heure de La Réunion';
+    el.textContent = weekend ? 'Horaires du siège\u00a0: 9h – 17h, heure de La Réunion' : open ? 'Dans les horaires du siège\u00a0: 9h – 17h, heure de La Réunion' : 'Hors des horaires du siège\u00a0: 9h – 17h, heure de La Réunion';
     el.title = 'Jours d’ouverture à confirmer.';
   });
 }
@@ -166,7 +169,7 @@ function setMenu(open) {
   menuBtn.setAttribute('aria-expanded', String(open));
   menuBtn.textContent = open ? 'Fermer' : 'Menu';
   document.body.style.overflow = open ? 'hidden' : '';
-  $$('main, .site-footer, .site-header .brand').forEach((el) => { el.inert = open; });
+  $$('main, .site-footer, .site-header .brand, .skip').forEach((el) => { el.inert = open; });
   if (lenis) open ? lenis.stop() : lenis.start();
   const links = $$('nav a', menu);
   if (open && !calm) gsap.fromTo(links, { yPercent: 60, opacity: 0 }, { yPercent: 0, opacity: 1, stagger: 0.05, duration: 0.6, ease: 'power3.out', overwrite: true });
@@ -369,7 +372,12 @@ document.addEventListener('click', (e) => {
   leaveTo(u.href, e.clientX || innerWidth / 2, e.clientY || innerHeight / 2);
 });
 window.addEventListener('pageshow', (e) => {
-  if (e.persisted) { gsap.set(veil, { scaleY: 0 }); html.classList.remove('is-arriving'); }
+  if (e.persisted) {
+    gsap.set(veil, { scaleY: 0 }); html.classList.remove('is-arriving');
+    // retour arrière (bfcache) : la constellation était regroupée au point de clic
+    if (currentScene) applyScene(currentScene, true);
+    if (lenis) lenis.start();
+  }
 });
 function arrive() {
   if (!html.classList.contains('is-arriving')) return false;
@@ -1209,6 +1217,9 @@ function mentions() {
 /* ================= démarrage ================= */
 function start() {
   html.classList.add('is-ready');
+  try { boot(); } catch (err) { html.classList.remove('js', 'is-arriving', 'is-intro'); throw err; }
+}
+function boot() {
   if (page === 'rencontrer') $$('.site-header .btn, .menu nav a[href="rencontrer.html"]').forEach((a) => a.setAttribute('aria-current', 'page'));
   paintPlaceholders();
   tickClocks();
