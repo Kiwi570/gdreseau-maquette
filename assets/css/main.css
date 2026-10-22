@@ -795,3 +795,49 @@ html.is-calm *, html.is-calm *::before, html.is-calm *::after { animation-durati
   .brief-side { order: 2; }
   #rencontrer-hero { min-height: 0 !important; padding-top: calc(var(--header-h) + 48px); }
 }
+
+/* ---------- v4 : images fortes en haut de page ---------- */
+.preuves--image { position: relative; isolation: isolate; overflow: clip; padding-block: clamp(120px, 13vw, 200px); }
+.preuves-bg { position: absolute; inset: -12% 0; z-index: -1; }
+.preuves-bg img, .preuves-bg .ph, .preuves-bg picture { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.preuves-bg::after {
+  content: ""; position: absolute; inset: 0;
+  background:
+    linear-gradient(180deg, var(--nuit) 0%, rgba(14, 12, 36, 0) 22%, rgba(14, 12, 36, 0) 78%, var(--nuit) 100%),
+    linear-gradient(90deg, rgba(14, 12, 36, .62) 0%, rgba(14, 12, 36, .18) 46%, rgba(14, 12, 36, .72) 100%);
+}
+.preuves--image .prix-text p { color: #c9c7e2; }
+.preuves--image .clients-label { color: var(--givre); }
+
+.manifeste-visual { position: relative; display: flex; justify-content: flex-end; }
+.manifeste-figure {
+  position: relative; margin: 0; border-radius: var(--r-card); overflow: hidden; isolation: isolate;
+  height: min(76vh, 740px); aspect-ratio: 4 / 5; width: auto; max-width: 100%; background: var(--encre);
+}
+.manifeste-image { position: absolute; inset: 0; z-index: -2; }
+.manifeste-image img, .manifeste-image .ph { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.manifeste-figure::after {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(180deg, rgba(14, 12, 36, .1) 0%, rgba(14, 12, 36, .25) 40%, rgba(14, 12, 36, .86) 100%);
+}
+.manifeste-visual .org { position: absolute; left: 7%; right: 7%; bottom: 15%; width: 86%; height: auto; }
+.manifeste-figure .org-cap { position: absolute; left: 7%; right: 7%; bottom: 5%; margin: 0; color: var(--givre); text-shadow: 0 1px 12px rgba(0, 0, 0, .6); }
+.manifeste-photo {
+  position: absolute; right: auto; top: auto; left: -4%; bottom: -7%; width: 27%; aspect-ratio: 2 / 3; z-index: 2;
+  border-radius: 14px; box-shadow: 0 0 0 5px var(--nuit), 0 24px 60px rgba(0, 0, 0, .45);
+}
+@media (max-width: 900px) {
+  .manifeste-visual { margin-top: 12px; }
+  .manifeste-figure { height: auto; width: 100%; aspect-ratio: 4 / 5; }
+  .manifeste-photo { position: absolute; width: 34%; left: 4%; bottom: -8%; margin: 0; }
+  .manifeste-sticky { padding-bottom: 140px; }
+  .preuves-bg { inset: -6% 0; }
+}
+.manifeste-photo { top: 9%; bottom: auto; }
+@media (max-width: 900px) {
+  .manifeste-photo { left: auto; right: 4%; top: -5%; bottom: auto; width: 30%; }
+  .manifeste-sticky { padding-bottom: 96px; }
+}
+.manifeste-figure::after { background: linear-gradient(180deg, rgba(14, 12, 36, .05) 0%, rgba(14, 12, 36, .22) 34%, rgba(14, 12, 36, .72) 62%, rgba(14, 12, 36, .92) 100%); }
+.manifeste-figure .org .o-line, .manifeste-figure .org .n-line { stroke-width: 1.8; }
+.manifeste-figure .org .o-node { fill: rgba(14, 12, 36, .92); }

@@ -99,7 +99,7 @@ function paintPlaceholders() {
     }
     const cap = el.closest('.backdrop')
       ? ''
-      : `<span class="ph-cap">${kind === 'film' ? 'Film Wopé à fournir par le client' : 'Visuel provisoire, image Grok à venir : ' + name}</span>`;
+      : `<span class="ph-cap">${kind === 'film' ? 'Film Wopé à fournir par le client' : 'Visuel provisoire, image à venir : ' + name}</span>`;
     el.innerHTML = `<svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
       <defs>
         <radialGradient id="${id}" cx="${gx}%" cy="${gy}%" r="75%"><stop offset="0" stop-color="#1db5d5" stop-opacity="${kind === 'ciel' ? 0.22 : 0.42}"/><stop offset=".55" stop-color="#2a2650" stop-opacity=".35"/><stop offset="1" stop-color="#0e0c24" stop-opacity="0"/></radialGradient>
@@ -619,6 +619,9 @@ function manifeste() {
   tl.to(nodes, { fill: '#1db5d5', stroke: '#1db5d5', duration: 0.6 }, 'morph+=1.2')
     .from(nLines, { drawSVG: 0, duration: 0.9, stagger: 0.04 }, 'morph+=1.4')
     .to(capB, { opacity: 1, duration: 0.5 }, 'morph+=1.6');
+  // l'image aérienne recule doucement pendant que le réseau se forme
+  const mimg = $('.manifeste-image > *');
+  if (mimg) tl.fromTo(mimg, { scale: 1.16, yPercent: -3 }, { scale: 1, yPercent: 0, ease: 'none', duration: tl.duration() }, 0);
   if (calm) { tl.progress(1); return; }
   const sec = $('#manifeste');
   ScrollTrigger.create({
