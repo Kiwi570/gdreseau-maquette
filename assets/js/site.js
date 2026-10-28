@@ -1,5 +1,5 @@
 /* GD Réseau — comportements communs et propres à chaque page */
-import { createConstellation, METIERS } from './constellation.js';
+import { createConstellation, METIERS } from './constellation.js?v=20261028';
 
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));

@@ -1,7 +1,7 @@
 /* Constellation GD Réseau : chaque point est un métier du réseau.
    Simulation commune, rendu WebGL (OGL) ou Canvas 2D en secours. */
 import { Renderer, Program, Geometry, Mesh } from './vendor/ogl.min.mjs';
-import { GD_POINTS } from './gd-points.js';
+import { GD_POINTS } from './gd-points.js?v=20261028';
 
 export const METIERS = [
   'Chefs de projet', 'Concepteurs', 'Rédacteurs', 'Directeurs artistiques', 'Web designers',
