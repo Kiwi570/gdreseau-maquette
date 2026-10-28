@@ -1,5 +1,5 @@
 /* GD Réseau — comportements communs et propres à chaque page */
-import { createConstellation, METIERS } from './constellation.js?v=20261028';
+import { createConstellation, METIERS } from './constellation.js?v=20261028-2';
 
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
@@ -162,9 +162,35 @@ const header = $('.site-header');
 const menu = $('#menu');
 const menuBtn = $('.menu-toggle');
 let menuOpen = false;
+// hauteur réelle de l'en-tête, réservée en haut des sections épinglées
+const setEntete = () => html.style.setProperty('--entete-h', (header?.offsetHeight || 0) + 'px');
+setEntete();
+if (header && 'ResizeObserver' in window) new ResizeObserver(setEntete).observe(header);
+
+/* barre d'action du bas (téléphone) : après le héros, jamais sur un formulaire, le pied de page ni le menu */
+const barre = $('.barre-bas');
+let barreUpdate = () => {};
+if (barre && 'IntersectionObserver' in window) {
+  html.classList.add('has-barre');
+  const setH = () => html.style.setProperty('--barres-h', barre.offsetHeight + 'px');
+  setH();
+  if ('ResizeObserver' in window) new ResizeObserver(setH).observe(barre);
+  const hero = $('main > .hero, main > .page-hero');
+  let pastHero = !hero;
+  const covering = new Set();
+  barreUpdate = () => barre.classList.toggle('is-on', pastHero && !covering.size && !menuOpen);
+  if (hero) new IntersectionObserver(([e]) => { pastHero = !e.isIntersecting && e.boundingClientRect.top < 0; barreUpdate(); }).observe(hero);
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => (e.isIntersecting ? covering.add(e.target) : covering.delete(e.target)));
+    barreUpdate();
+  });
+  $$('#rencontre, form, .site-footer').forEach((el) => io.observe(el));
+}
+
 function setMenu(open) {
   if (!menu) return;
   menuOpen = open;
+  barreUpdate();
   menu.hidden = !open;
   menuBtn.setAttribute('aria-expanded', String(open));
   menuBtn.textContent = open ? 'Fermer' : 'Menu';
@@ -804,18 +830,19 @@ function realisations() {
   if (calm) return; // défilement horizontal natif (classe tl-native)
   const mm = gsap.matchMedia();
   const pinEl = $('.real-pin', sec);
-  // la carte entière (image + légende) doit tenir dans la hauteur de l'écran
-  const clipsEls = $$('.clip', sec);
-  const capH = () => Math.max(...clipsEls.map((c) => c.offsetHeight - ($('.media', c)?.offsetHeight || 0)));
+  // la carte entière (image + légende) tient dans l'écran par le CSS (colonne flex) ;
+  // si l'image devient trop basse, on passe en mode compact (titre réduit, sans texte)
+  const firstMedia = $('.clip .media', sec);
   const sizeClips = () => {
     sec.classList.remove('is-compact');
-    const avail = () => innerHeight - (track.getBoundingClientRect().top - pinEl.getBoundingClientRect().top) - capH() - 18;
-    const apply = (v) => sec.style.setProperty('--mh', Math.floor(Math.max(150, Math.min(v, innerWidth * 0.38 * 0.75, 440))) + 'px');
-    apply(avail());
-    if (avail() < 250) sec.classList.add('is-compact');
-    // deux passes : la légende peut changer de hauteur avec la largeur de la carte
-    apply(avail());
-    apply(avail());
+    sec.style.removeProperty('--clip-w');
+    if (!firstMedia) return;
+    if (firstMedia.offsetHeight < 200) sec.classList.add('is-compact');
+    // la carte s'élargit au plus jusqu'au 4:3 de l'image mesurée (deux passes : la légende peut changer de hauteur)
+    for (let k = 0; k < 2; k++) {
+      const w = firstMedia.offsetWidth, h = firstMedia.offsetHeight;
+      if (h * 4 / 3 < w - 1) sec.style.setProperty('--clip-w', Math.max(280, Math.floor(h * 4 / 3)) + 'px');
+    }
   };
   mm.add('(min-width: 901px) and (min-height: 480px)', () => {
     sec.classList.remove('tl-native');
@@ -826,7 +853,7 @@ function realisations() {
     const tween = gsap.to(track, { x: () => -dist(), ease: 'none' });
     const st = ScrollTrigger.create({
       trigger: pinEl, pin: pinEl, start: 'top top', end: () => '+=' + dist() * 1.05,
-      scrub: 0.8, animation: tween, invalidateOnRefresh: true, anticipatePin: 1,
+      scrub: 0.8, animation: tween, invalidateOnRefresh: true,
       onUpdate: (self) => { tc.textContent = fmtTC(self.progress); },
     });
     bars.forEach((b) => {
@@ -854,7 +881,7 @@ function realisations() {
     return () => {
       ScrollTrigger.removeEventListener('refreshInit', sizeClips);
       sec.classList.remove('is-compact');
-      sec.style.removeProperty('--mh');
+      sec.style.removeProperty('--clip-w');
       sec.removeEventListener('focusin', onFocus);
       sec.classList.add('tl-native');
       gsap.set(track, { clearProps: 'transform' });

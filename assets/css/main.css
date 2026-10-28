@@ -225,7 +225,7 @@ html.has-cursor label { cursor: none; }
 .ph svg { position: absolute; inset: 0; width: 100%; height: 100%; }
 .ph-cap {
   position: absolute; left: 12px; bottom: 10px; right: 12px; z-index: 1;
-  font-size: .72rem; line-height: 1.3; color: rgba(238, 242, 248, .62);
+  font-size: max(12px, .75rem); line-height: 1.3; color: rgba(238, 242, 248, .62);
 }
 .media { position: relative; overflow: hidden; border-radius: var(--r-card); background: var(--encre); }
 .media > img, .media > .ph { width: 100%; height: 100%; object-fit: cover; }
@@ -685,7 +685,7 @@ html.js:not(.is-calm) [data-wipe] { clip-path: inset(0 100% 0 0); }
   .hero-bottom { grid-template-columns: 1fr; }
   .hero-side { justify-items: start; text-align: left; }
   .preuves-grid, .manifeste-grid, .pensons-grid, .rives-grid, .real-head, .reseau-head, .brief-grid, .contact-grid { grid-template-columns: 1fr; }
-  .manifeste { min-height: 0; }
+  .manifeste, html.js:not(.is-calm) .manifeste { min-height: 0; }
   .manifeste-sticky { position: relative; min-height: 0; padding-block: 96px; }
   .manifeste-photo { position: relative; right: auto; top: auto; width: 52%; margin: 28px 0 0 auto; }
   .services-grid { grid-template-columns: 1fr; }
@@ -847,14 +847,31 @@ html.is-calm *, html.is-calm *::before, html.is-calm *::after { animation-durati
 .manifeste-figure .org .o-node { fill: rgba(14, 12, 36, .92); }
 
 /* ---------- v5 : réalisations calées sur la hauteur de l'écran ---------- */
-.real:not(.tl-native) .real-pin { justify-content: flex-start; padding-top: calc(var(--header-h) + clamp(16px, 4vh, 48px)); }
-.real:not(.tl-native) .clip { width: calc(var(--mh, 420px) * 4 / 3); }
-.real:not(.tl-native) .clip .media { height: var(--mh, 420px); aspect-ratio: auto; }
+/* colonne de 100svh sous l'en-tête mesuré : l'image prend la place restante, la légende garde sa hauteur */
+.real:not(.tl-native) .real-pin {
+  height: 100vh; height: 100svh; min-height: 0; justify-content: flex-start;
+  padding-top: calc(var(--entete-h, var(--header-h)) + clamp(12px, 3vh, 40px)); padding-bottom: clamp(14px, 3vh, 32px);
+}
+.real:not(.tl-native) .real-head, .real:not(.tl-native) .tl-ruler { flex: none; }
+.real:not(.tl-native) .timeline { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+.real:not(.tl-native) .tl-viewport { flex: 1; min-height: 0; }
+.real:not(.tl-native) .tl-track { height: 100%; }
+.real:not(.tl-native) .clip, .real:not(.tl-native) .clip > a { display: flex; flex-direction: column; min-height: 0; }
+.real:not(.tl-native) .clip { height: 100%; width: var(--clip-w, clamp(280px, 38vw, 560px)); }
+.real:not(.tl-native) .clip > a { flex: 1; }
+.real:not(.tl-native) .clip > a > :not(.media), .real:not(.tl-native) .clip > :not(.media):not(a) { flex: none; }
+.real:not(.tl-native) .clip-tag { align-self: flex-start; }
+.real:not(.tl-native) .clip .media { flex: 0 1 auto; min-height: 0; aspect-ratio: 4 / 3; }
 .real:not(.tl-native) .clip p { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 .real.is-compact .real-head { margin-bottom: 12px; align-items: center; }
 .real.is-compact .real-head .sec-title { font-size: clamp(1.7rem, 3.4vw, 2.8rem); margin-bottom: 0; }
 .real.is-compact .real-head p { display: none; }
 /* écrans larges mais peu hauts : pas d'effet collant pour le manifeste */
+@media (min-width: 901px) and (max-height: 600px) {
+  .real:not(.tl-native) .real-head { margin-bottom: 10px; }
+  .real:not(.tl-native) .real-head .sec-title { font-size: clamp(1.5rem, 3vw, 2.2rem); margin-bottom: 0; }
+  .real:not(.tl-native) .clip-bar { margin: 8px 0 10px; }
+}
 @media (min-width: 901px) and (max-height: 699px) {
   html.js:not(.is-calm) .manifeste { min-height: 0; }
   .manifeste-sticky { position: relative; min-height: 0; padding-block: clamp(72px, 10vh, 120px); }
@@ -887,4 +904,18 @@ html.is-calm *, html.is-calm *::before, html.is-calm *::after { animation-durati
   dd a, .menu .menu-foot a, .rencontre .alt a, .quote figcaption a { display: inline-block; padding-block: 10px; }
   .link-draw { padding-block: 12px; }
   .hero-prix { min-height: 44px; }
+}
+
+/* ---------- barre d'action du bas (téléphone) ---------- */
+.barre-bas { display: none; }
+@media (max-width: 900px) {
+  .barre-bas {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 44; display: flex; gap: 10px;
+    padding: 10px var(--gutter) calc(10px + env(safe-area-inset-bottom, 0px));
+    background: rgba(14, 12, 36, .94); border-top: 1px solid var(--ligne);
+    transform: translateY(110%); visibility: hidden; transition: transform .4s var(--ease), visibility 0s .4s;
+  }
+  .barre-bas.is-on { transform: none; visibility: visible; transition: transform .4s var(--ease); }
+  .barre-bas .btn { flex: 1; justify-content: center; min-height: 44px; }
+  html.has-barre body { padding-bottom: var(--barres-h, 0px); }
 }
